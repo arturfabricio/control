@@ -2,7 +2,7 @@
 
 This project was developed troughout the spring semester of 2021, at Aalborg University. The purpose of this project was to implement monoSLAM into a small UAV (Parrot AR drone) with the purpose of performing Search and Rescue operations in a forest environment. The project is supported on the use of the ORB-SLAM2 library for ROS and the Tum Simulator for the drone.
 
-This project was developed and tested for Ubuntu 18.04 + ROS Melodic. Test.
+This project was developed and tested for Ubuntu 18.04 + ROS Melodic.
 
 ## Dependencies
 
