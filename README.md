@@ -9,7 +9,7 @@ This project was developed and tested for Ubuntu 18.04 + ROS Melodic.
 In order to run this project, you will need to follow the following dependencies:
 
 [ORB-SLAM2 (ros)](http://wiki.ros.org/orb_slam2_ros)<br/>
-[Tum SImulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
+[Tum Simulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
 [ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
 
 Please follow all the instructions on the above websites on how to install these dependencies
@@ -21,17 +21,20 @@ Start by creating a [catkin](http://wiki.ros.org/catkin/Tutorials/create_a_works
 ```bash
 mkdir -p ~/catkin_ws/src
 ```
+
 Install all the dependencies in the /src folder of the workspace. After this, clone this repository:
 
 ```bash
 git clone https://github.com/arturfabricio/control
 ```
+
 You can now make your catkin workspace:
 
 ```bash
 cd ~/catkin_ws/
 catkin_make
 ```
+
 Everything should be properly installed now. Don't forget to source.
 
 ```bash

@@ -76,10 +76,10 @@
       <shadows>1</shadows>
     </scene>
     <state world_name='default'>
-      <sim_time>838 722000000</sim_time>
-      <real_time>179 928862544</real_time>
-      <wall_time>1618300322 27488499</wall_time>
-      <iterations>178987</iterations>
+      <sim_time>916 919000000</sim_time>
+      <real_time>78 943234208</real_time>
+      <wall_time>1618306137 315272036</wall_time>
+      <iterations>78197</iterations>
       <model name='ground_plane'>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -90,41 +90,41 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='pine_tree'>
-        <pose frame=''>-1.1152 2.9984 0 0 -0 0</pose>
+      <model name='pine_tree_clone_0_clone'>
+        <pose frame=''>6.64259 -1.3921 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-1.1152 2.9984 0 0 -0 0</pose>
+          <pose frame=''>6.64259 -1.3921 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='pine_tree_clone'>
-        <pose frame=''>0.967108 4.98428 0 0 -0 0</pose>
+      <model name='pine_tree_clone_1_clone'>
+        <pose frame=''>8.25777 1.56619 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>0.967108 4.98428 0 0 -0 0</pose>
+          <pose frame=''>8.25777 1.56619 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='pine_tree_clone_0'>
-        <pose frame=''>-1.99694 6.982 0 0 -0 0</pose>
+      <model name='pine_tree_clone_2'>
+        <pose frame=''>4.67641 1.58995 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-1.99694 6.982 0 0 -0 0</pose>
+          <pose frame=''>4.67641 1.58995 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='pine_tree_clone_1'>
-        <pose frame=''>0.044519 9.20103 0 0 -0 0</pose>
+      <model name='pine_tree_clone_clone'>
+        <pose frame=''>3.07633 -1.17246 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>0.044519 9.20103 0 0 -0 0</pose>
+          <pose frame=''>3.07633 -1.17246 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -136,7 +136,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>3.20544 -9.87445 9.03793 0 0.537797 1.79699</pose>
+        <pose frame=''>-3.86336 -1.26226 27.057 -0 1.3178 -0.09101</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -152,7 +152,7 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
-    <model name='pine_tree'>
+    <model name='pine_tree_clone_2'>
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
@@ -213,9 +213,9 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose frame=''>-1.1152 2.9984 0 0 -0 0</pose>
+      <pose frame=''>4.67641 1.58995 0 0 -0 0</pose>
     </model>
-    <model name='pine_tree_clone'>
+    <model name='pine_tree_clone_clone'>
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
@@ -276,9 +276,9 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose frame=''>0.967108 4.98428 0 0 -0 0</pose>
+      <pose frame=''>3.07633 -1.17246 0 0 -0 0</pose>
     </model>
-    <model name='pine_tree_clone_0'>
+    <model name='pine_tree_clone_0_clone'>
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
@@ -339,9 +339,9 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose frame=''>-1.99694 6.982 0 0 -0 0</pose>
+      <pose frame=''>6.64259 -1.3921 0 0 -0 0</pose>
     </model>
-    <model name='pine_tree_clone_1'>
+    <model name='pine_tree_clone_1_clone'>
       <static>1</static>
       <link name='link'>
         <collision name='collision'>
@@ -402,7 +402,7 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose frame=''>0.044519 9.20103 0 0 -0 0</pose>
+      <pose frame=''>8.25777 1.56619 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>
