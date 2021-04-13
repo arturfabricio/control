@@ -8,9 +8,9 @@ This project was developed and tested for Ubuntu 18.04 + ROS Melodic.
 
 In order to run this project, you will need to follow the following dependencies:
 
-[ORB-SLAM2 (ros)](http://wiki.ros.org/orb_slam2_ros)
-[Tum SImulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)
-[ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory
+[ORB-SLAM2 (ros)](http://wiki.ros.org/orb_slam2_ros)<br/>
+[Tum SImulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
+[ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
 
 Please follow all the instructions on the above websites on how to install these dependencies
 
@@ -18,31 +18,36 @@ Please follow all the instructions on the above websites on how to install these
 
 Start by creating a [catkin](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) worspace:
 
-´´´bash
+```bash
 mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws/
-´´´
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+```
+Install all the dependencies in the /src folder of the workspace. After this, clone this repository:
 
 ```bash
-pip install foobar
+git clone https://github.com/arturfabricio/control
+```
+You can now make your catkin workspace:
+
+```bash
+cd ~/catkin_ws/
+catkin_make
+```
+Everything should be properly installed now. Don't forget to source.
+
+```bash
+source devel/setup.bash
 ```
 
 ## Usage
 
-```python
-import foobar
+We currently only have a test .launch file which starts the simulation, ORB-SLAM2, rviz and joystick control. Test by typing the following on a terminal:
 
-foobar.pluralize('word') # returns 'words'
-foobar.pluralize('goose') # returns 'geese'
-foobar.singularize('phenomena') # returns 'phenomenon'
+```bash
+roslaunch control test.launch
 ```
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+## Videos
