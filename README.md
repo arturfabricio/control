@@ -48,6 +48,11 @@ We currently only have a test .launch file which starts the simulation, ORB-SLAM
 ```bash
 roslaunch control test.launch
 ```
+If you do not wish to use joystick control run:
+
+```bash
+roslaunch control test_nojoy.launch
+```
 
 ## Contributing
 
