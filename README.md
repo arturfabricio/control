@@ -4,7 +4,7 @@ This project was developed troughout the spring semester of 2021, at Aalborg Uni
 
 This project was developed and tested for Ubuntu 18.04 + ROS Melodic.
 
-## Dependencies
+## Dependenciess
 
 In order to run this project, you will need to follow the following dependencies:
 
@@ -50,6 +50,7 @@ We currently only have a test .launch file which starts the simulation, ORB-SLAM
 ```bash
 roslaunch control test.launch
 ```
+
 If you do not wish to use joystick control run:
 
 ```bash
