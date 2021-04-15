@@ -12,7 +12,7 @@ In order to run this project, you will need to follow the following dependencies
 [Tum Simulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
 [ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
 [Point Cloud Library](https://pointclouds.org/downloads/)<br/>
-[pcl_ros (melodic)](http://wiki.ros.org/pcl_ros) <br/> 
+[perception_pcl](https://github.com/ros-perception/perception_pcl) <br/> 
 
 Please follow all the instructions on the above websites on how to install these dependencies
 
