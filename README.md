@@ -4,7 +4,7 @@ This project was developed troughout the spring semester of 2021, at Aalborg Uni
 
 This project was developed and tested for Ubuntu 18.04 + ROS Melodic.
 
-## Dependenciess
+## Dependencies
 
 In order to run this project, you will need to follow the following dependencies:
 
