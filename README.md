@@ -11,8 +11,8 @@ In order to run this project, you will need to follow the following dependencies
 [ORB-SLAM2 (ros)](http://wiki.ros.org/orb_slam2_ros)<br/>
 [Tum Simulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
 [ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
-[Point Cloud Library] (https://pointclouds.org/downloads/)<br/>
-[pcl_ros (melodic)] (http://wiki.ros.org/pcl_ros) <br/>
+[Point Cloud Library](https://pointclouds.org/downloads/)<br/>
+[pcl_ros (melodic)](http://wiki.ros.org/pcl_ros) <br/> 
 
 Please follow all the instructions on the above websites on how to install these dependencies
 
