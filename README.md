@@ -2,7 +2,7 @@
 
 This project was developed troughout the spring semester of 2021, at Aalborg University. The purpose of this project was to implement monoSLAM into a small UAV (Parrot AR drone) with the purpose of performing Search and Rescue operations in a forest environment. The project is supported on the use of the ORB-SLAM2 library for ROS and the Tum Simulator for the drone.
 
-This project was developed and tested for Ubuntu 18.04 + ROS Melodic.
+This project was developed and tested for Ubuntu 18.04 + ROS Melodic + Gazebo 9.16.
 
 ## Dependencies
 
@@ -12,7 +12,7 @@ In order to run this project, you will need to follow the following dependencies
 [Tum Simulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
 [ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
 [Point Cloud Library](https://pointclouds.org/downloads/)<br/>
-[perception_pcl](https://github.com/ros-perception/perception_pcl) <br/> 
+[perception_pcl](https://github.com/ros-perception/perception_pcl) <br/>
 
 Please follow all the instructions on the above websites on how to install these dependencies
 
