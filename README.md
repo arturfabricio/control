@@ -14,6 +14,10 @@ In order to run this project, you will need to install the following dependencie
 [Point Cloud Library](https://pointclouds.org/downloads/)<br/>
 [perception_pcl](https://github.com/ros-perception/perception_pcl) <br/>
 [octomap-python (install using pip3)](https://pypi.org/project/octomap-python/1.8.0.post8/) <br/>
+[octomap](http://wiki.ros.org/octomap)<br/>
+
+Hector-gazebo packages
+These can be installed with the following command: "sudo apt install ros-melodic-hector-gazebo ros-melodic-hector-sensors-gazebo ros-melodic-hector-xacro-tools"
 
 Please follow all the instructions on the above websites on how to install these dependencies
 
@@ -57,6 +61,13 @@ If you do not wish to use joystick control run:
 ```bash
 roslaunch control test_nojoy.launch
 ```
+
+## Troubleshooting
+
+Gazebo symbol lookup error after installing Gazebo 9.16:
+gazebo: symbol lookup error: /usr/lib/x86_64-linux-gnu/libgazebo_common.so.9: undefined symbol: \_ZN8ignition10fuel_tools12ClientConfig12SetUserAgentERKNSt7\_\_cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+
+This happens because the ignition-math library is out of date and can be solved with "sudo apt upgrade libignition-math2"
 
 ## Contributing
 
