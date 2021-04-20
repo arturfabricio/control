@@ -13,7 +13,7 @@ In order to run this project, you will need to install the following dependencie
 [ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
 [Point Cloud Library](https://pointclouds.org/downloads/)<br/>
 [perception_pcl](https://github.com/ros-perception/perception_pcl) <br/>
-[OctoMap (for ros melodic)](http://wiki.ros.org/octomap) <br/>
+[octomap-python (install using pip3)](https://pypi.org/project/octomap-python/1.8.0.post8/) <br/>
 
 Please follow all the instructions on the above websites on how to install these dependencies
 
