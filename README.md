@@ -6,13 +6,14 @@ This project was developed and tested for Ubuntu 18.04 + ROS Melodic + Gazebo 9.
 
 ## Dependencies
 
-In order to run this project, you will need to follow the following dependencies:
+In order to run this project, you will need to install the following dependencies:
 
 [ORB-SLAM2 (ros)](http://wiki.ros.org/orb_slam2_ros)<br/>
 [Tum Simulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
 [ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
 [Point Cloud Library](https://pointclouds.org/downloads/)<br/>
 [perception_pcl](https://github.com/ros-perception/perception_pcl) <br/>
+[OctoMap (for ros melodic)](http://wiki.ros.org/octomap) <br/>
 
 Please follow all the instructions on the above websites on how to install these dependencies
 
