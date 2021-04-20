@@ -74,7 +74,7 @@ gazebo: symbol lookup error: /usr/lib/x86_64-linux-gnu/libgazebo_common.so.9: un
 This happens because the ignition-math library is out of date and can be solved with
 
 ```bash
-sudo apt upgrade libignition-math2w
+sudo apt upgrade libignition-math2
 ```
 
 ## Contributing
