@@ -19,9 +19,9 @@ Please follow all the instructions on the above websites on how to install these
 
 ## Installation
 
-Install the Desktop-Full version of [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu)
+##### Install the Desktop-Full version of [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu)
 
-Upgrade gazebo to the newest version 9.XX:
+##### Upgrade gazebo to the newest version 9.XX:
 
 ```bash
 sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
@@ -31,40 +31,42 @@ sudo apt install gazebo9
 sudo apt upgrade libignition-math2
 ```
 
-Create a [workspace folder](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) in the home directory
+##### Create a [workspace folder](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) in the home directory
 
 ```bash
 mkdir -p ~/catkin_ws/src
 ```
 
-Installing dependencies:<br/>
-Aptitude packages:
+### Installing dependencies:<br/>
+
+##### Aptitude packages:
 
 ```bash
 sudo apt install libeigen3-dev libsdl1.2-dev ros-melodic-octomap ros-melodic-hector-gazebo ros-melodic-hector-sensors-gazebo ros-melodic-xacro-tools
 ```
 
-Clone the repositories into the src directory of your catkin workspace:
+##### Clone the repositories into the src directory of your catkin workspace:
 
 ```bash
 git clone https://github.com/surajmahangade/tum_simulator_melodic.git && git clone https://github.com/dsapandora/ardrone_autonomy.git && git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git && git clone https://github.com/OctoMap/octomap_mapping.git
 ```
 
-Installing the package:
-Clone the package into the src directory of your catkin workspace
+### Installing the package:<br/>
+
+##### Clone the package into the src directory of your catkin workspace
 
 ```bash
 git clone https://github.com/arturfabricio/control
 ```
 
-You can now build your catkin workspace:
+##### You can now build your catkin workspace:
 
 ```bash
 cd ~/catkin_ws/
 catkin_make
 ```
 
-Everything should be properly installed now. Don't forget to source.
+##### Everything should be properly installed now. Don't forget to source.
 
 ```bash
 source devel/setup.bash
@@ -86,7 +88,8 @@ roslaunch control test_nojoy.launch
 
 ## Troubleshooting
 
-Octomap catkin_make error:<br/>
+### Octomap catkin_make error:<br/>
+
 Could not find a package configuration file provided by "octomap_ros" with
 any of the following names:
 
