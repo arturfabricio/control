@@ -86,6 +86,19 @@ roslaunch control test_nojoy.launch
 
 ## Troubleshooting
 
+Octomap catkin_make error:<br/>
+Could not find a package configuration file provided by "octomap_ros" with
+any of the following names:
+
+octomap_rosConfig.cmake
+octomap_ros-config.cmake
+
+This happens because of missing octomap_ros libraries, and can be fix by installing the following:
+
+```bash
+sudo apt-get install ros-melodic-octomap ros-melodic-octomap-mapping ros-melodic-octomap-msgs ros-melodic-octomap-ros ros-melodic-octomap-rviz-plugins ros-melodic-octomap-server
+```
+
 ## Contributing
 
 ## License
