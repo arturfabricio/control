@@ -42,7 +42,7 @@ mkdir -p ~/catkin_ws/src
 ##### Aptitude packages:
 
 ```bash
-sudo apt install libeigen3-dev libsdl1.2-dev ros-melodic-octomap ros-melodic-hector-gazebo ros-melodic-hector-sensors-gazebo ros-melodic-xacro-tools
+sudo apt install libeigen3-dev libsdl1.2-dev ros-melodic-octomap ros-melodic-hector-gazebo ros-melodic-hector-sensors-gazebo ros-melodic-hector-xacro-tools
 ```
 
 ##### Clone the repositories into the src directory of your catkin workspace:
