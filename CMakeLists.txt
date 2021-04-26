@@ -11,6 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  geometry_msgs
+  visualization_msgs
+  pcl_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -138,6 +141,12 @@ include_directories(
 add_executable(controller src/controller.cpp)
 add_dependencies(controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(controller
+ ${catkin_LIBRARIES}
+)
+
+add_executable(position src/position.cpp)
+add_dependencies(position ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(position
  ${catkin_LIBRARIES}
 )
 
