@@ -9,26 +9,29 @@
 #include <boost/foreach.hpp>
 
 std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
-double x_current = 0;
-double y_current = 0;
-double z_current = 0;
-double ptx;
-double pty;
-double ptz;
 double least_distance = 10000;
+struct point
+{
+    double x, y, z;
+};
+struct point drone_pos;
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
-void measure_distance(std::vector<float> &x, std::vector<float> &y, std::vector<float> &z)
+void measure_distance(std::vector<double> &x, std::vector<double> &y, std::vector<double> &z)
 {
+    struct point least_distance_point;
     std::vector<double> distance;
     least_distance = 10000;
     for (int i = 0; i < x.size(); i++)
     {
-        distance.push_back((sqrt(pow((x_current - x[i]), 2) + (pow((y_current - y[i]), 2)) + (pow((z_current - z[i]), 2)))) * 10);
+        distance.push_back((sqrt(pow((drone_pos.x - x[i]), 2) + (pow((drone_pos.y - y[i]), 2)) + (pow((drone_pos.z - z[i]), 2)))) * 10);
         if (distance[i] < least_distance)
         {
             least_distance = distance[i];
+            least_distance_point.x = x[i];
+            least_distance_point.y = y[i];
+            least_distance_point.z = z[i];
         }
     }
     std::cout << "Least Distance: " << least_distance << "\n";
@@ -37,18 +40,18 @@ void measure_distance(std::vector<float> &x, std::vector<float> &y, std::vector<
 void tf_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
 {
     // ROS_INFO_STREAM("Received pose: " << msg);
-    x_current = msg->pose.position.x;
-    y_current = msg->pose.position.y;
-    z_current = msg->pose.position.z;
-    // ROS_INFO_STREAM(y_current);
+    drone_pos.x = msg->pose.position.x;
+    drone_pos.y = msg->pose.position.y;
+    drone_pos.z = msg->pose.position.z;
+    // ROS_INFO_STREAM(drone_pos.y);
     pose.push_back(msg);
 }
 
 void xyz_callback(const PointCloud::ConstPtr &msg)
 {
-    std::vector<float> x_obstacle;
-    std::vector<float> y_obstacle;
-    std::vector<float> z_obstacle;
+    std::vector<double> x_obstacle;
+    std::vector<double> y_obstacle;
+    std::vector<double> z_obstacle;
     //printf ("Cloud: width = %d, height = %d\n", msg->width, msg->height);
     BOOST_FOREACH (const pcl::PointXYZ &pt, msg->points)
     {
