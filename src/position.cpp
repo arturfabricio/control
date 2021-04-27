@@ -25,7 +25,7 @@ void measure_distance(std::vector<float> &x, std::vector<float> &y, std::vector<
     least_distance = 10000;
     for (int i = 0; i < x.size(); i++)
     {
-        distance.push_back(sqrt(pow((x_current - x[i]), 2) + (pow((y_current - y[i]), 2)) + (pow((z_current - z[i]), 2))));
+        distance.push_back((sqrt(pow((x_current - x[i]), 2) + (pow((y_current - y[i]), 2)) + (pow((z_current - z[i]), 2)))) * 10);
         if (distance[i] < least_distance)
         {
             least_distance = distance[i];
