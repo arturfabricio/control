@@ -1,12 +1,8 @@
 #include <ros/ros.h>
 #include <math.h>
-#include <sstream>
 #include <geometry_msgs/PoseStamped.h>
 #include <vector>
 #include <iostream>
-#include <fstream>
-#include <visualization_msgs/Marker.h>
-#include <visualization_msgs/MarkerArray.h>
 #include <sensor_msgs/PointCloud2.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
@@ -70,11 +66,6 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     ros::Subscriber subscribetf = nh.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
     ros::Subscriber subscriverpc = nh.subscribe("/statisticalOutliers/output", 1, xyz_callback);
-    // ros::Publisher point_pub = nh.advertise<pcl::PointXYZ>("/points", 1000);
-
-    // while(ros::ok()){
-    // point_pub.publish(pt);
     ros::spin();
-    // }
     return (0);
 }
