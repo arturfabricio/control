@@ -70,11 +70,6 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     ros::Subscriber subscribetf = nh.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
     ros::Subscriber subscriverpc = nh.subscribe("/statisticalOutliers/output", 1, xyz_callback);
-    // ros::Publisher point_pub = nh.advertise<pcl::PointXYZ>("/points", 1000);
-
-    // while(ros::ok()){
-    // point_pub.publish(pt);
     ros::spin();
-    // }
     return (0);
 }
