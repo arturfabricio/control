@@ -16,7 +16,7 @@
                 <remap from="~input" to="/orb_slam2_mono/map_points" />
                 <rosparam>
                  mean_k: 50
-                 stddev: 1
+                 stddev: 0.5
                  negative: False
                 </rosparam>
         </node>
