@@ -29,15 +29,8 @@ void segmentaion()
     normal_estimator.setKSearch(50);
     normal_estimator.compute(*normals);
 
-    pcl::IndicesPtr indices(new std::vector<int>);
-    pcl::PassThrough<pcl::PointXYZ> pass;
-    pass.setInputCloud(cloud);
-    pass.setFilterFieldName("z");
-    pass.setFilterLimits(0.0, 1.0);
-    pass.filter(*indices);
-
     pcl::RegionGrowing<pcl::PointXYZ, pcl::Normal> reg;
-    reg.setMinClusterSize(50);
+    reg.setMinClusterSize(100);
     reg.setMaxClusterSize(1000000);
     reg.setSearchMethod(tree);
     reg.setNumberOfNeighbours(30);
