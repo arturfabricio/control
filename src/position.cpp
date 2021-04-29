@@ -7,6 +7,13 @@
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
 #include <boost/foreach.hpp>
+#include "controller.h"
+
+struct goal_point{
+    double x;
+    double y;
+    double z;
+};
 
 std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
 double x_current = 0;
@@ -25,22 +32,25 @@ void measure_distance(std::vector<float> &x, std::vector<float> &y, std::vector<
     least_distance = 10000;
     for (int i = 0; i < x.size(); i++)
     {
-        distance.push_back((sqrt(pow((x_current - x[i]), 2) + (pow((y_current - y[i]), 2)) + (pow((z_current - z[i]), 2)))) * 10);
+        distance.push_back(sqrt(pow((x_current - x[i]), 2) + (pow((y_current - y[i]), 2)) + (pow((z_current - z[i]), 2))));
         if (distance[i] < least_distance)
         {
             least_distance = distance[i];
         }
     }
-    std::cout << "Least Distance: " << least_distance << "\n";
+    //std::cout << "Least Distance: " << least_distance << "\n";
 }
 
 void tf_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
 {
-    // ROS_INFO_STREAM("Received pose: " << msg);
+    ROS_INFO_STREAM("Received pose: " << msg);
     x_current = msg->pose.position.x;
     y_current = msg->pose.position.y;
     z_current = msg->pose.position.z;
-    // ROS_INFO_STREAM(y_current);
+    ROS_INFO_STREAM(x_current);
+    ROS_INFO_STREAM(y_current);
+    ROS_INFO_STREAM(z_current); 
+
     pose.push_back(msg);
 }
 
@@ -62,10 +72,12 @@ void xyz_callback(const PointCloud::ConstPtr &msg)
 
 int main(int argc, char **argv)
 {
+    std::cout << "Initiated" << "\n";
     ros::init(argc, argv, "my_subscriber");
-    ros::NodeHandle nh;
-    ros::Subscriber subscribetf = nh.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
-    ros::Subscriber subscriverpc = nh.subscribe("/statisticalOutliers/output", 1, xyz_callback);
+    ros::NodeHandle n;
+    ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
+    ros::Subscriber subscriverpc = n.subscribe("/statisticalOutliers/output", 1, xyz_callback);
+    // controller(n,x_current,y_current,z_current, 0, 0, 0);
     ros::spin();
     return (0);
 }

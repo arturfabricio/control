@@ -1,3 +1,6 @@
+#ifndef CONTROLLER_H // include guard
+#define CONTROLLER_H
+
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Empty.h>
@@ -8,10 +11,7 @@
 using namespace std;
 using namespace ros;
 
-int main(int argc, char **argv)
-{
-    init(argc, argv, "controller");
-    NodeHandle n;
+void controller(NodeHandle n, double init_x, double init_y, double init_z, double goal_x, double goal_y, double goal_z){
     Publisher takeoff_pub = n.advertise<std_msgs::Empty>("ardrone/takeoff", 10);
     Publisher land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
     Publisher vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
@@ -36,5 +36,6 @@ int main(int argc, char **argv)
         }
         spinOnce();
     }
-    return 0;
 }
+
+#endif
