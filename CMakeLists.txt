@@ -138,12 +138,6 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/control_node.cpp)
 
-add_executable(controller src/controller.cpp)
-add_dependencies(controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(controller
- ${catkin_LIBRARIES}
-)
-
 add_executable(position src/position.cpp)
 add_dependencies(position ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(position
