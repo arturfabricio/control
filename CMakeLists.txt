@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   visualization_msgs
   pcl_ros
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -141,6 +142,12 @@ include_directories(
 add_executable(position src/position.cpp)
 add_dependencies(position ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(position
+ ${catkin_LIBRARIES}
+)
+
+add_executable(perception src/perception_pipeline.cpp)
+add_dependencies(perception ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(perception
  ${catkin_LIBRARIES}
 )
 
