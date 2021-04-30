@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     // Set up parameters
     std::string cloud_topic, world_frame, camera_frame;
     world_frame = "map";
-    camera_frame = "camera";
+    camera_frame = "base_link";
     cloud_topic = "orb_slam2_mono/map_points";
 
     // Set up publishers
@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
         voxel_filter.setLeafSize(float(0.002), float(0.002), float(0.002));
         voxel_filter.filter(*cloud_voxel_filtered);
 
-        // Conver PointCloud from PCL to ROS
+        // Convert PointCloud from PCL to ROS
         sensor_msgs::PointCloud2::Ptr pc2_cloud(new sensor_msgs::PointCloud2);
         pcl::toROSMsg(*cloud_ptr, *pc2_cloud);
         pc2_cloud->header.frame_id = world_frame;
