@@ -205,7 +205,7 @@ int main(int argc, char *argv[])
         std::vector<pcl::PointIndices> cluster_indices;
         pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
         ec.setClusterTolerance(0.1); // 2cm
-        ec.setMinClusterSize(10);
+        ec.setMinClusterSize(0);
         ec.setMaxClusterSize(10000);
         ec.setSearchMethod(tree);
         ec.setInputCloud(cloud_filtered);
