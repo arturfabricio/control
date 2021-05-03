@@ -14,7 +14,7 @@
        <param name="voc_file" type="string" value="$(find orb_slam2_ros)/orb_slam2/Vocabulary/ORBvoc.txt" />
 
        <param name="pointcloud_frame_id" type="string" value="map" />
-       <param name="camera_frame_id" type="string" value="camera_link" />
+       <param name="camera_frame_id" type="string" value="base_link" />
        <param name="min_num_kf_in_map" type="int" value="5" />
 
       <!-- ORB parameters -->
