@@ -76,6 +76,7 @@ int main(int argc, char *argv[])
         geometry_msgs::PoseStamped::ConstPtr drone_pose =
         ros::topic::waitForMessage<geometry_msgs::PoseStamped>(poseDrone, nh);
         
+        //Subtract drone position from pointcloud
         typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
         pcl::PointCloud<pcl::PointXYZ> cloud;
         pcl::PointXYZ newpoint;
@@ -93,9 +94,34 @@ int main(int argc, char *argv[])
             update_cloud.push_back(newpoint);
         }
 
+        //Pass-through filters
+        pcl::PointCloud<pcl::PointXYZ>::Ptr update_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(update_cloud));
+            //x-direction
+        pcl::PointCloud<pcl::PointXYZ> xf_cloud, yf_cloud, zf_cloud;
+        pcl::PassThrough<pcl::PointXYZ> pass_x;
+        pass_x.setInputCloud(update_cloud_ptr);
+        pass_x.setFilterFieldName("x");
+        pass_x.setFilterLimits(-0.5,0.5);
+        pass_x.filter(xf_cloud);
 
+            //y-direction
+        pcl::PointCloud<pcl::PointXYZ>::Ptr xf_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(xf_cloud));
+        pcl::PassThrough<pcl::PointXYZ> pass_y;
+        pass_y.setInputCloud(xf_cloud_ptr);
+        pass_y.setFilterFieldName("y");
+        pass_y.setFilterLimits(-0.5, 0.5);
+        pass_y.filter(yf_cloud);
 
-        //                 // Transform PointCloud from Camera Frame to World Frame
+        // Add drone position to pointcloud
+        pcl::PointCloud<pcl::PointXYZ> new_cloud;
+        for (int i = 0; i < yf_cloud.points.size(); i++){
+            newpoint.x = yf_cloud.points[i].x + dronePoint.x;
+            newpoint.y = yf_cloud.points[i].y + dronePoint.y;
+            newpoint.z = yf_cloud.points[i].z + dronePoint.z;
+            new_cloud.push_back(newpoint);
+        }
+
+        // // Transform PointCloud from Camera Frame to World Frame
         // tf::TransformListener listener;
         // tf::StampedTransform stransform;
         // try
@@ -114,34 +140,13 @@ int main(int argc, char *argv[])
         // pcl::PointCloud<pcl::PointXYZ> cloud;
         // pcl::fromROSMsg(transformed_cloud, cloud);
 
-
-        // //Voxel Grid Filtering
-        // pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(cloud));
-        // pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_voxel_filtered(new pcl::PointCloud<pcl::PointXYZ>());
-        // pcl::VoxelGrid<pcl::PointXYZ> voxel_filter;
-        // voxel_filter.setInputCloud(cloud_ptr);
-        // voxel_filter.setLeafSize(float(0.01), float(0.01), float(0.01));
-        // voxel_filter.filter(*cloud_voxel_filtered);
-
-        //Pass-through filters
-        pcl::PointCloud<pcl::PointXYZ>::Ptr update_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(update_cloud));
-            //x-direction
-        pcl::PointCloud<pcl::PointXYZ> xf_cloud, yf_cloud, zf_cloud;
-        pcl::PassThrough<pcl::PointXYZ> pass_x;
-        pass_x.setInputCloud(update_cloud_ptr);
-        pass_x.setFilterFieldName("x");
-        pass_x.setFilterLimits(-1.0,1.0);
-        pass_x.filter(xf_cloud);
-
-            //y-direction
-        pcl::PointCloud<pcl::PointXYZ>::Ptr xf_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(xf_cloud));
-        pcl::PassThrough<pcl::PointXYZ> pass_y;
-        pass_y.setInputCloud(xf_cloud_ptr);
-        pass_y.setFilterFieldName("y");
-        pass_y.setFilterLimits(-1.0, 1.0);
-        pass_y.filter(yf_cloud);
-
-
+        //Voxel Grid Filtering
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(new_cloud));
+        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_voxel_filtered(new pcl::PointCloud<pcl::PointXYZ>());
+        pcl::VoxelGrid<pcl::PointXYZ> voxel_filter;
+        voxel_filter.setInputCloud(cloud_ptr);
+        voxel_filter.setLeafSize(float(0.01), float(0.01), float(0.01));
+        voxel_filter.filter(*cloud_voxel_filtered);
 
         // // Crop-Box Filtering
         // pcl::PointCloud<pcl::PointXYZ> xyz_filtered_cloud;
@@ -236,7 +241,7 @@ int main(int argc, char *argv[])
 
         // Convert PointCloud from PCL to ROS
         sensor_msgs::PointCloud2::Ptr pc2_cloud(new sensor_msgs::PointCloud2);
-        pcl::toROSMsg(yf_cloud, *pc2_cloud);
+        pcl::toROSMsg(*cloud_voxel_filtered, *pc2_cloud);
         pc2_cloud->header.frame_id = world_frame;
         pc2_cloud->header.stamp = ros::Time::now();
         object_pub.publish(pc2_cloud);
