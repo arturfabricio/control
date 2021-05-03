@@ -15,7 +15,6 @@ std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
 double least_distance = 10000;
 geometry_msgs::Twist twist;
 
-
 struct point
 {
     double x, y, z;
@@ -26,11 +25,14 @@ struct quaternion
     double x,y,z,w;
 };
 
+struct point drone_vec;
+struct point goal_vec;
 struct point drone_pos;
 struct point drone_pos2;
 struct quaternion orientation;
 struct point goal_point;
 double roll, pitch, yaw;
+double angle_2points;
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
@@ -50,6 +52,24 @@ void getAngles(double x, double y, double z, double w){
     std::cout << "Roll: " << roll << "\n";
     std::cout << "Pitch: " << pitch << "\n";
     std::cout << "Yaw: " << yaw << "\n";
+}
+
+void drone_vector(double x,double y,double angle){
+    drone_vec.x = x + cos(angle); 
+    drone_vec.y = y + sin(angle);
+    drone_vec.x = round( drone_vec.x * 100.0 ) / 100.0; 
+    drone_vec.y = round( drone_vec.y * 100.0 ) / 100.0; 
+    std::cout << "Drone vector x: " << drone_vec.x << "\n";
+    std::cout << "Drone vector y: " << drone_vec.y << "\n";
+}
+
+void goal_vector(double x1, double y1, double x2, double y2){
+    goal_vec.x = x2 - x1;
+    goal_vec.y = y2 - y1;
+}
+
+void dot_product(double x1, double y1, double x2, double y2){
+
 }
 
 void measure_distance(std::vector<double> &x, std::vector<double> &y, std::vector<double> &z)
@@ -103,7 +123,13 @@ void chatterCallback(const nav_msgs::Odometry::ConstPtr& msg)
   orientation.y = msg->pose.pose.orientation.y;
   orientation.z = msg->pose.pose.orientation.z;
   orientation.w = msg->pose.pose.orientation.w;
-  getAngles(orientation.x, orientation.y, orientation.z, orientation.w);
+}
+
+void angle(){
+    getAngles(orientation.x, orientation.y, orientation.z, orientation.w);
+    drone_vector(drone_pos2.x,drone_pos2.y,yaw);
+    goal_vector(drone_pos2.x, drone_pos.y, goal_point.x, goal_point.y);
+    dot_product(drone_vec.x,drone_vec.y,goal_vec.x,goal_vec.y);
 }
 
 int main(int argc, char **argv)
@@ -122,13 +148,13 @@ int main(int argc, char **argv)
     ros::Publisher land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
     ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);  
     std_msgs::Empty msg;
+    takeoff_pub.publish(msg);
 
     while (ros::ok()){
-        // takeoff_pub.publish(msg);
-        distance(drone_pos2.x,goal_point.x,drone_pos2.y,goal_point.y,drone_pos2.z,goal_point.z);
+
+        //distance(drone_pos2.x,goal_point.x,drone_pos2.y,goal_point.y,drone_pos2.z,goal_point.z);
         ros::spinOnce();
         // pub_vel.publish(twist);
-
     }
 
     return (0);
