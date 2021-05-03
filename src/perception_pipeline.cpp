@@ -241,7 +241,7 @@ int main(int argc, char *argv[])
 
         // Convert PointCloud from PCL to ROS
         sensor_msgs::PointCloud2::Ptr pc2_cloud(new sensor_msgs::PointCloud2);
-        pcl::toROSMsg(*(clusters.at(0)), *pc2_cloud);
+        pcl::toROSMsg(*sor_cloud_filtered, *pc2_cloud);
         pc2_cloud->header.frame_id = world_frame;
         pc2_cloud->header.stamp = ros::Time::now();
         object_pub.publish(pc2_cloud);
