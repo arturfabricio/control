@@ -13,6 +13,58 @@
       </attenuation>
       <direction>-0.5 0.1 -0.9</direction>
     </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <velocity_decay>
+          <linear>0</linear>
+          <angular>0</angular>
+        </velocity_decay>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <gravity>1</gravity>
+        <enable_wind>0</enable_wind>
+      </link>
+    </model>
     <physics name='default_physics' default='0' type='ode'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
@@ -24,40 +76,38 @@
       <shadows>1</shadows>
     </scene>
     <state world_name='default'>
-      <sim_time>1326 387000000</sim_time>
-      <real_time>292 229151435</real_time>
-      <wall_time>1619786641 7284581</wall_time>
-      <iterations>206054</iterations>
-      <model name='baylands_01'>
-        <pose frame=''>65.8537 -29.6722 -1.3 0 -0 0</pose>
+      <sim_time>2499 94000000</sim_time>
+      <real_time>1343 81696209</real_time>
+      <wall_time>1620033031 334345799</wall_time>
+      <iterations>1335867</iterations>
+      <model name='asphalt_plane'>
+        <pose frame=''>-0.033817 0.053971 -0.041886 0 -0 0</pose>
         <scale>1 1 1</scale>
-        <link name='body'>
-          <pose frame=''>65.8537 -29.6722 -1.3 0 -0 0</pose>
+        <link name='link'>
+          <pose frame=''>-0.033817 0.053971 -0.041886 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
-        <link name='body2'>
-          <pose frame=''>65.8537 -29.6722 -1.3 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-        <link name='body3'>
-          <pose frame=''>65.8537 -29.6722 -1.3 0 -0 0</pose>
+      </model>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='quadrotor'>
-        <pose frame=''>-10.0003 10.0002 -1.6243 -0.003579 0.001959 -0.000503</pose>
+        <pose frame=''>10.2668 9.31957 0.039997 -0 -3e-05 -2.67858</pose>
         <scale>1 1 1</scale>
         <link name='base_link'>
-          <pose frame=''>-10.0003 10.0002 -1.6243 -0.003579 0.001959 -0.000503</pose>
-          <velocity>0 -0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
+          <pose frame=''>10.2668 9.31957 0.039997 -0 -3e-05 -2.67858</pose>
+          <velocity>0.002528 0.001262 0.001068 -0.031544 0.063197 -0</velocity>
+          <acceleration>4.38956 2.19092 4.33164 1.67615 0.36336 -3.09397</acceleration>
+          <wrench>6.58433 3.28638 6.49746 0 -0 0</wrench>
         </link>
       </model>
       <light name='sun'>
@@ -66,7 +116,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>-61.943 182.672 44.647 -0 0.191888 -1.57816</pose>
+        <pose frame=''>11.2844 16.8307 13.2945 0 0.817799 -2.23073</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -82,6 +132,50 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
+    <model name='asphalt_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>20 20 0.1</size>
+            </box>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <box>
+              <size>20 20 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://asphalt_plane/materials/scripts</uri>
+              <uri>model://asphalt_plane/materials/textures</uri>
+              <name>vrc/asphalt</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.033817 0.053971 0 0 -0 0</pose>
+    </model>
     <model name='quadrotor'>
       <link name='base_link'>
         <pose frame=''>0 0 0 0 -0 0</pose>
@@ -481,121 +575,7 @@
         <topicName>cmd_vel</topicName>
         <robotNamespace>/</robotNamespace>
       </plugin>
-      <pose frame=''>-10 10 0.5 0 -0 0</pose>
-    </model>
-    <model name='baylands_01'>
-      <pose frame=''>65.8537 -29.6722 -1.3 0 -0 0</pose>
-      <static>1</static>
-      <link name='body'>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://baylands/media/baylands_01.DAE</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://baylands/media/scripts/</uri>
-              <uri>model://baylands/media/Textures/</uri>
-              <name>OakTree/Branch</name>
-            </script>
-          </material>
-        </visual>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://baylands/media/baylands_01.DAE</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <link name='body2'>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://baylands/media/baylands_02.DAE</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://baylands/media/scripts/</uri>
-              <uri>model://baylands/media/Textures/</uri>
-              <name>OakTree/Branch</name>
-            </script>
-          </material>
-        </visual>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://baylands/media/baylands_02.DAE</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <link name='body3'>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://baylands/media/baylands_03.DAE</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://baylands/media/baylands_03.DAE</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
+      <pose frame=''>-8 8 1 0 0 -0.93</pose>
     </model>
   </world>
 </sdf>

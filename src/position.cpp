@@ -62,12 +62,17 @@ void xyz_callback(const PointCloud::ConstPtr &msg)
     //printf ("Cloud: width = %d, height = %d\n", msg->width, msg->height);
     BOOST_FOREACH (const pcl::PointXYZ &pt, msg->points)
     {
-        //printf ("\t(%f, %f, %f)\n", pt.x, pt.y, pt.z);
+        printf ("\t(%f, %f, %f)\n", pt.x, pt.y, pt.z);
         x_obstacle.push_back(pt.x);
         y_obstacle.push_back(pt.y);
         z_obstacle.push_back(pt.z);
     }
     measure_distance(x_obstacle, y_obstacle, z_obstacle);
+    std::cout << "x: " << x_obstacle[0] << "\n";
+    std::cout << "y: " << y_obstacle[0] << "\n";
+    std::cout << "z: " << z_obstacle[0] << "\n";
+
+
 }
 
 int main(int argc, char **argv)
@@ -76,7 +81,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "my_subscriber");
     ros::NodeHandle n;
     ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
-    ros::Subscriber subscriverpc = n.subscribe("/statisticalOutliers/output", 1, xyz_callback);
+    ros::Subscriber subscriverpc = n.subscribe("/orb_slam2_mono/map_points", 1, xyz_callback);
     // controller(n,x_current,y_current,z_current, 0, 0, 0);
     ros::spin();
     return (0);
