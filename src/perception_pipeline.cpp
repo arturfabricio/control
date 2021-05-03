@@ -3,6 +3,7 @@
 #include <tf/transform_listener.h>
 #include <tf/transform_broadcaster.h>
 #include <sensor_msgs/PointCloud2.h> //hydro
+#include <geometry_msgs/PoseStamped.h>
 
 // PCL specific includes
 #include <pcl_conversions/pcl_conversions.h> //hydro
@@ -20,23 +21,47 @@
 //#include <tf_conversions/tf_eigen.h>
 //#include <pcl/segmentation/extract_polygonal_prism_data.h>
 
+
+std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
+struct point
+{
+    double x, y, z;
+};
+struct point drone_pos;
+
+void drone_position(const geometry_msgs::PoseStamped::ConstPtr &msg)
+{
+    //ros::Publisher dronePose;
+    // ROS_INFO_STREAM("Received pose: " << msg);
+    drone_pos.x = msg->pose.position.x;
+    drone_pos.y = msg->pose.position.y;
+    drone_pos.z = msg->pose.position.z;
+    // ROS_INFO_STREAM(drone_pos.y);
+    pose.push_back(msg);
+    //dronePose.publish(pose);
+}
+
 int main(int argc, char *argv[])
 {
     // Initialzie ROS Node
+    
     ros::init(argc, argv, "perception_node");
     ros::NodeHandle nh;
     ros::NodeHandle priv_nh_("~");
 
     // Set up parameters
-    std::string cloud_topic, world_frame, camera_frame;
+    std::string cloud_topic, world_frame, camera_frame, pose_topic;
     world_frame = "map";
     camera_frame = "front_link";
     cloud_topic = "orb_slam2_mono/map_points";
+    pose_topic = "orb_slam2_mono/pose";
 
     // Set up publishers
     ros::Publisher object_pub, cluster_pub, pose_pub;
     object_pub = nh.advertise<sensor_msgs::PointCloud2>("object_cluster", 1);
     cluster_pub = nh.advertise<sensor_msgs::PointCloud2>("primary_cluster", 1);
+
+    
     while (ros::ok())
     {
         // Listen for PointCloud
@@ -45,41 +70,67 @@ int main(int argc, char *argv[])
         sensor_msgs::PointCloud2::ConstPtr recent_cloud =
             ros::topic::waitForMessage<sensor_msgs::PointCloud2>(topic, nh);
 
-                        // Transform PointCloud from Camera Frame to World Frame
-        tf::TransformListener listener;
-        tf::StampedTransform stransform;
-        try
-        {
-            listener.waitForTransform(world_frame, recent_cloud->header.frame_id, ros::Time::now(), ros::Duration(6.0));
-            listener.lookupTransform(world_frame, recent_cloud->header.frame_id, ros::Time(0), stransform);
-        }
-        catch (tf::TransformException ex)
-        {
-            ROS_ERROR("%s", ex.what());
-        }
-        sensor_msgs::PointCloud2 transformed_cloud;
-        pcl_ros::transformPointCloud(world_frame, stransform, *recent_cloud, transformed_cloud);
-
-        // Convert PointCloud from ROS to PCL
+        // Listen for drone position
+        std::string poseDrone = nh.resolveName(pose_topic);
+        //ROS_INFO_STREAM("Cloud service called; waiting for a PointCloud2 on topic " << topic);
+        geometry_msgs::PoseStamped::ConstPtr drone_pose =
+        ros::topic::waitForMessage<geometry_msgs::PoseStamped>(poseDrone, nh);
+        
+        typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
         pcl::PointCloud<pcl::PointXYZ> cloud;
-        pcl::fromROSMsg(transformed_cloud, cloud);
+        pcl::PointXYZ newpoint;
+        pcl::PointXYZ dronePoint;
+        dronePoint.x = drone_pose->pose.position.x;
+        dronePoint.y = drone_pose->pose.position.y;
+        dronePoint.z = drone_pose->pose.position.z;
+        pcl::fromROSMsg(*recent_cloud, cloud);
+        //Subtract drone pose from pointcloud, to get the clusters relative to the drone.
+        pcl::PointCloud<pcl::PointXYZ> update_cloud;
+        for (int i = 0; i < cloud.points.size(); i++){
+            newpoint.x = cloud.points[i].x - dronePoint.x;
+            newpoint.y = cloud.points[i].y - dronePoint.y;
+            newpoint.z = cloud.points[i].z - dronePoint.z;
+            update_cloud.push_back(newpoint);
+        }
 
 
-        //Voxel Grid Filtering
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(cloud));
-        pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_voxel_filtered(new pcl::PointCloud<pcl::PointXYZ>());
-        pcl::VoxelGrid<pcl::PointXYZ> voxel_filter;
-        voxel_filter.setInputCloud(cloud_ptr);
-        voxel_filter.setLeafSize(float(0.01), float(0.01), float(0.01));
-        voxel_filter.filter(*cloud_voxel_filtered);
+
+        //                 // Transform PointCloud from Camera Frame to World Frame
+        // tf::TransformListener listener;
+        // tf::StampedTransform stransform;
+        // try
+        // {
+        //     listener.waitForTransform(world_frame, recent_cloud->header.frame_id, ros::Time::now(), ros::Duration(6.0));
+        //     listener.lookupTransform(world_frame, recent_cloud->header.frame_id, ros::Time(0), stransform);
+        // }
+        // catch (tf::TransformException ex)
+        // {
+        //     ROS_ERROR("%s", ex.what());
+        // }
+        // sensor_msgs::PointCloud2 transformed_cloud;
+        // pcl_ros::transformPointCloud(world_frame, stransform, *recent_cloud, transformed_cloud);
+
+        // // Convert PointCloud from ROS to PCL
+        // pcl::PointCloud<pcl::PointXYZ> cloud;
+        // pcl::fromROSMsg(transformed_cloud, cloud);
+
+
+        // //Voxel Grid Filtering
+        // pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(cloud));
+        // pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_voxel_filtered(new pcl::PointCloud<pcl::PointXYZ>());
+        // pcl::VoxelGrid<pcl::PointXYZ> voxel_filter;
+        // voxel_filter.setInputCloud(cloud_ptr);
+        // voxel_filter.setLeafSize(float(0.01), float(0.01), float(0.01));
+        // voxel_filter.filter(*cloud_voxel_filtered);
 
         //Pass-through filters
+        pcl::PointCloud<pcl::PointXYZ>::Ptr update_cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(update_cloud));
             //x-direction
         pcl::PointCloud<pcl::PointXYZ> xf_cloud, yf_cloud, zf_cloud;
         pcl::PassThrough<pcl::PointXYZ> pass_x;
-        pass_x.setInputCloud(cloud_voxel_filtered);
+        pass_x.setInputCloud(update_cloud_ptr);
         pass_x.setFilterFieldName("x");
-        pass_x.setFilterLimits(-0.05,0.05);
+        pass_x.setFilterLimits(-1.0,1.0);
         pass_x.filter(xf_cloud);
 
             //y-direction
@@ -87,8 +138,10 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_y;
         pass_y.setInputCloud(xf_cloud_ptr);
         pass_y.setFilterFieldName("y");
-        pass_y.setFilterLimits(-0.05, 0.05);
+        pass_y.setFilterLimits(-1.0, 1.0);
         pass_y.filter(yf_cloud);
+
+
 
         // // Crop-Box Filtering
         // pcl::PointCloud<pcl::PointXYZ> xyz_filtered_cloud;
