@@ -87,10 +87,13 @@ int main(int argc, char *argv[])
         pcl::PointCloud<pcl::PointXYZ> update_cloud;
         for (int i = 0; i < cloud.points.size(); i++)
         {
-            newpoint.x = cloud.points[i].x - dronePoint.x;
-            newpoint.y = cloud.points[i].y - dronePoint.y;
-            newpoint.z = cloud.points[i].z - dronePoint.z;
-            update_cloud.push_back(newpoint);
+            if (cloud.points[i].z > 0.005)
+            {
+                newpoint.x = cloud.points[i].x - dronePoint.x;
+                newpoint.y = cloud.points[i].y - dronePoint.y;
+                newpoint.z = cloud.points[i].z - dronePoint.z;
+                update_cloud.push_back(newpoint);
+            }
         }
 
         //Pass-through filters
