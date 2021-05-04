@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_x;
         pass_x.setInputCloud(update_cloud_ptr);
         pass_x.setFilterFieldName("x");
-        pass_x.setFilterLimits(-0.5, 0.5);
+        pass_x.setFilterLimits(-0.02, 0.5);
         pass_x.filter(xf_cloud);
 
         //y-direction
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_y;
         pass_y.setInputCloud(xf_cloud_ptr);
         pass_y.setFilterFieldName("y");
-        pass_y.setFilterLimits(-0.5, 0.5);
+        pass_y.setFilterLimits(-0.05, 0.5);
         pass_y.filter(yf_cloud);
 
         // Add drone position to pointcloud
@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
 
         std::vector<pcl::PointIndices> cluster_indices;
         pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
-        ec.setClusterTolerance(0.08); // 2cm
+        ec.setClusterTolerance(0.04); // 2cm
         ec.setMinClusterSize(0);
         ec.setMaxClusterSize(10000);
         ec.setSearchMethod(tree);
