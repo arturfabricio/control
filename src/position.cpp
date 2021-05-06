@@ -82,7 +82,7 @@ void angle(double x,double y, double x1, double y1, double x2, double y2){
     //     angle_2points = 4;
     // }
 
-    double slope_goal = (y2-y)/(2*x2-x);
+    double slope_goal = (y2-y)/(x2-x);
     double slope_drone = (y1-y)/(x1-x);
     std::cout << "Slope goal: " << slope_goal << " Slope Drone: " << slope_drone << "\n";
     // angle_2points = acos(top/bottom);
