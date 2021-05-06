@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_y;
         pass_y.setInputCloud(xf_cloud_ptr);
         pass_y.setFilterFieldName("y");
-        pass_y.setFilterLimits(-0.05, 0.5);
+        pass_y.setFilterLimits(-0.05, 0.05);
         pass_y.filter(yf_cloud);
 
         // Add drone position to pointcloud

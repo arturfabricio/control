@@ -7,8 +7,8 @@
         </include>
         <include file="$(find control)/launch/orb_slam2_mono_sim.launch" >
         </include>
-        <include file="$(find ardrone_joystick)/launch/teleop.launch" >
-        </include>
+        <!-- <include file="$(find ardrone_joystick)/launch/teleop.launch" >
+        </include> -->
 	<node type="rviz" name="rviz" pkg="rviz" args="-d $(find control)/rviz/config_file.rviz" />
         <!-- <include file="$(find control)/launch/octomap_mapping.launch" >
         </include> -->

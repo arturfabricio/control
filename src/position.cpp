@@ -22,7 +22,7 @@ struct point
 
 struct quaternion
 {
-    double x,y,z,w;
+    double x, y, z, w;
 };
 
 struct point drone_vec;
@@ -36,17 +36,20 @@ double angle_2points;
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
-void linear_control(int x,int y){
+void linear_control(int x, int y)
+{
     twist.linear.y = y; //l,r
     twist.linear.x = x; //f
 }
 
-void yaw_control(int s){
+void yaw_control(int s)
+{
     twist.angular.z = s; //yaw
 }
 
-void getAngles(double x, double y, double z, double w){
-    tf::Quaternion q(x,y,z,w);
+void getAngles(quaternion *orientation)
+{
+    tf::Quaternion q(orientation->x, orientation->y, orientation->z, orientation->w);
     tf::Matrix3x3 m(q);
     m.getRPY(roll, pitch, yaw);
     // std::cout << "Roll: " << roll << "\n";
@@ -54,40 +57,29 @@ void getAngles(double x, double y, double z, double w){
     // std::cout << "Yaw: " << yaw << "\n";
 }
 
-void drone_vector(double x,double y ,double angle){
-    drone_vec.x = x + cos(angle); 
-    drone_vec.y = y + sin(angle);
-    //drone_vec.x = round( drone_vec.x * 100.0 ) / 100.0; 
-    //drone_vec.y = round( drone_vec.y * 100.0 ) / 100.0; 
+void drone_vector(point *vec, double angle)
+{
+    drone_vec.x = vec->x + cos(angle);
+    drone_vec.y = vec->y + sin(angle);
+    //drone_vec.x = round( drone_vec.x * 100.0 ) / 100.0;
+    //drone_vec.y = round( drone_vec.y * 100.0 ) / 100.0;
     //std::cout << "Drone vector x: " << drone_vec.x << "  Drone vector y: " << drone_vec.y << "\n";
 }
 
-void goal_vector(double x1, double y1, double x2, double y2){
-    goal_vec.x = -(x2 - x1);
-    goal_vec.y = -(y2 - y1);
+void goal_vector(point *drone, point *goal)
+{
+    goal_vec.x = -(goal->x - drone->x);
+    goal_vec.y = (goal->y - drone->y);
+    //std::cout << "goalX: " << goal->x << " goalY: " << goal->y << " droneX: " << drone->x << " droneY: " << drone->y << endl;
     //std::cout << "Goal vector x: " << goal_vec.x << "  Goal vector y: " << goal_vec.y << "\n";
 }
 
-void angle(double x,double y, double x1, double y1, double x2, double y2){
-    // angle_2points = atan2(y1-y2,x1-x2);
-    // double dot = x1*x2 + y1*y2;
-    // double magnitude = sqrt(pow(x1, 2)+pow(y1, 2))*sqrt(pow(x2, 2)+pow(y2, 2));
-    // dot = round(dot); 
-    // magnitude = round(magnitude); 
-    // std::cout << "Dot :" << dot << " Magnitude: " << magnitude << "\n";
-    // if (dot-magnitude < 1 && magnitude-dot > -1){
-    //     angle_2points = 0;
-    // }
-    // else{
-    //     angle_2points = 4;
-    // }
+void slope(point *dronePos, point *droneVec, point *goalPoint)
+{
 
-    double slope_goal = (y2-y)/(x2-x);
-    double slope_drone = (y1-y)/(x1-x);
+    double slope_goal = round((goalPoint->y - dronePos->y) / (goalPoint->x - dronePos->x) * 100.0) / 100.0;
+    double slope_drone = round((droneVec->y - dronePos->y) / (droneVec->x - dronePos->x) * 100.0) / 100.0;
     std::cout << "Slope goal: " << slope_goal << " Slope Drone: " << slope_drone << "\n";
-    // angle_2points = acos(top/bottom);
-    // angle_2points = round( -angle_2points * 100.0 ) / 100.0; 
-    // std::cout << "Angle: " << angle_2points << "\n";
 }
 
 void measure_distance(std::vector<double> &x, std::vector<double> &y, std::vector<double> &z)
@@ -132,22 +124,23 @@ void xyz_callback(const PointCloud::ConstPtr &msg)
     measure_distance(x_obstacle, y_obstacle, z_obstacle);
 }
 
-void chatterCallback(const nav_msgs::Odometry::ConstPtr& msg)
+void chatterCallback(const nav_msgs::Odometry::ConstPtr &msg)
 {
-  drone_pos2.x = msg->pose.pose.position.x;
-  drone_pos2.y = msg->pose.pose.position.y;
-  drone_pos2.z = msg->pose.pose.position.z;
-  orientation.x = msg->pose.pose.orientation.x;
-  orientation.y = msg->pose.pose.orientation.y;
-  orientation.z = msg->pose.pose.orientation.z;
-  orientation.w = msg->pose.pose.orientation.w;
+    drone_pos2.x = msg->pose.pose.position.x;
+    drone_pos2.y = msg->pose.pose.position.y;
+    drone_pos2.z = msg->pose.pose.position.z;
+    orientation.x = msg->pose.pose.orientation.x;
+    orientation.y = msg->pose.pose.orientation.y;
+    orientation.z = msg->pose.pose.orientation.z;
+    orientation.w = msg->pose.pose.orientation.w;
 }
 
-void angle(){
-    getAngles(orientation.x, orientation.y, orientation.z, orientation.w);
-    drone_vector(drone_pos2.x,drone_pos2.y,yaw);
-    goal_vector(drone_pos2.x, drone_pos2.y, goal_point.x, goal_point.y);
-    angle(drone_pos2.x, drone_pos2.y,drone_vec.x,drone_vec.y,goal_vec.x,goal_vec.y);
+void angle()
+{
+    getAngles(&orientation);
+    drone_vector(&drone_pos2, yaw);
+    goal_vector(&drone_pos2, &goal_point);
+    slope(&drone_pos2, &drone_vec, &goal_point);
 }
 
 int main(int argc, char **argv)
@@ -156,7 +149,8 @@ int main(int argc, char **argv)
     goal_point.y = -10;
     goal_point.z = 0;
 
-    std::cout << "Initiated" << "\n";
+    std::cout << "Initiated"
+              << "\n";
     ros::init(argc, argv, "my_subscriber");
     ros::NodeHandle n;
     // ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
@@ -164,11 +158,12 @@ int main(int argc, char **argv)
     ros::Subscriber subscriverpc = n.subscribe("/orb_slam2_mono/map_points", 1, xyz_callback);
     ros::Publisher takeoff_pub = n.advertise<std_msgs::Empty>("ardrone/takeoff", 10);
     ros::Publisher land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
-    ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);  
+    ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
     std_msgs::Empty msg;
     takeoff_pub.publish(msg);
 
-    while (ros::ok()){
+    while (ros::ok())
+    {
         angle();
         //distance(drone_pos2.x,goal_point.x,drone_pos2.y,goal_point.y,drone_pos2.z,goal_point.z);
         ros::spinOnce();
@@ -177,4 +172,3 @@ int main(int argc, char **argv)
 
     return (0);
 }
-
