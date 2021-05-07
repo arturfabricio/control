@@ -87,13 +87,13 @@ int main(int argc, char *argv[])
         pcl::PointCloud<pcl::PointXYZ> update_cloud;
         for (int i = 0; i < cloud.points.size(); i++)
         {
-            if (cloud.points[i].z > 0.005)
-            {
+            // if (cloud.points[i].z > 0.005)
+            // {
                 newpoint.x = cloud.points[i].x - dronePoint.x;
                 newpoint.y = cloud.points[i].y - dronePoint.y;
                 newpoint.z = cloud.points[i].z - dronePoint.z;
                 update_cloud.push_back(newpoint);
-            }
+            //}
         }
 
         //Pass-through filters
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_x;
         pass_x.setInputCloud(update_cloud_ptr);
         pass_x.setFilterFieldName("x");
-        pass_x.setFilterLimits(-0.02, 0.5);
+        pass_x.setFilterLimits(-0.5, 0.5);
         pass_x.filter(xf_cloud);
 
         //y-direction
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_y;
         pass_y.setInputCloud(xf_cloud_ptr);
         pass_y.setFilterFieldName("y");
-        pass_y.setFilterLimits(-0.05, 0.05);
+        pass_y.setFilterLimits(-0.5, 0.5);
         pass_y.filter(yf_cloud);
 
         // Add drone position to pointcloud
@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
         std::vector<pcl::PointIndices> cluster_indices;
         pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
         ec.setClusterTolerance(0.04); // 2cm
-        ec.setMinClusterSize(0);
+        ec.setMinClusterSize(10);
         ec.setMaxClusterSize(10000);
         ec.setSearchMethod(tree);
         ec.setInputCloud(cloud_filtered);
@@ -241,10 +241,27 @@ int main(int argc, char *argv[])
         sor.setStddevMulThresh(0.5);
 
         sor.filter(*sor_cloud_filtered);
+        
+
+        pcl::PointCloud<pcl::PointXYZ>::Ptr centroid(new pcl::PointCloud<pcl::PointXYZ>);
+        // centroid.points[0].x += sor_cloud_filtered->points[0].x;
+        // centroid.points[0].y += sor_cloud_filtered->points[0].y;
+        // centroid.points[0].z += sor_cloud_filtered->points[0].z;
+        for (int i = 0; i < sor_cloud_filtered->points.size(); i++)
+        {
+            centroid->points[0].x += sor_cloud_filtered->points[i].x;
+            centroid->points[0].y += sor_cloud_filtered->points[i].y;
+            centroid->points[0].z += sor_cloud_filtered->points[i].z;
+    
+        }
+        centroid->points[0].x = centroid->points[0].x/sor_cloud_filtered->points.size();
+        centroid->points[0].y = centroid->points[0].y/sor_cloud_filtered->points.size();
+        centroid->points[0].z = centroid->points[0].z/sor_cloud_filtered->points.size();
+
 
         // Convert PointCloud from PCL to ROS
         sensor_msgs::PointCloud2::Ptr pc2_cloud(new sensor_msgs::PointCloud2);
-        pcl::toROSMsg(*sor_cloud_filtered, *pc2_cloud);
+        pcl::toROSMsg(*centroid, *pc2_cloud);
         pc2_cloud->header.frame_id = world_frame;
         pc2_cloud->header.stamp = ros::Time::now();
         object_pub.publish(pc2_cloud);

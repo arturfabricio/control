@@ -14,8 +14,10 @@
 std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
 double least_distance = 10000;
 geometry_msgs::Twist twist;
-bool cond = true;
 bool land = false;
+ros::Publisher land_pub;
+ros::Publisher takeoff_pub;
+std_msgs::Empty msg;
 
 struct point
 {
@@ -87,7 +89,7 @@ void goal_vector(point *drone, point *goal)
     //std::cout << "Goal vector x: " << goal_vec.x << "  Goal vector y: " << goal_vec.y << "\n";
 }
 
-double angle(point *dronePos, point *droneVec, point *goalPoint)
+double theta(point *dronePos, point *droneVec, point *goalPoint)
 {
     double angle1 = atan2((droneVec->y - dronePos->y),(droneVec->x - dronePos->x));
     double angle2 = atan2((goalPoint->y - dronePos->y),(goalPoint->x - dronePos->x));
@@ -147,42 +149,54 @@ void chatterCallback(const nav_msgs::Odometry::ConstPtr &msg)
     orientation.w = msg->pose.pose.orientation.w;
 }
 
+void height_control(point *Drone){
+    std::cout << "Height: " << Drone->z << endl;
+    if(Drone->z < 0.9){
+        takeoff_pub.publish(msg);
+    }
+    else if(Drone->z > 0.9 && Drone->z < 1.1){
+        twist.linear.z = 1;
+    }
+    else{
+        twist.linear.z = -1;
+    }
+}
+
 void calc()
 {
     getAngles(&orientation);
     drone_vector(&drone_pos2, yaw);
     goal_vector(&drone_pos2, &goal_point);
-    cout << "Angle: " << angle(&drone_pos2, &drone_vec, &goal_point) << endl;
+    // cout << "Angle: " << theta(&drone_pos2, &drone_vec, &goal_point) << endl;
     distance(&drone_pos2, &goal_point);
+    height_control(&drone_pos2);
 }
 
 void align(){
-    double LowBound = angle(&drone_pos2, &drone_vec, &goal_point) - 0.087;
-    double UpBound = angle(&drone_pos2, &drone_vec, &goal_point) + 0.087;
-    
-    if(round(angle(&drone_pos2, &drone_vec, &goal_point)) != 0 && cond == true){
-        angular_control(0,0,10);
-        cout << "Rotating!" << "\n";
-    }
+    double angle = theta(&drone_pos2, &drone_vec, &goal_point);
+    double LowBound = -0.00872665*dist/10;
+    double UpBound = 0.00872665*dist/10;
+    // cout << "LowBound: "  << LowBound << "\n";
+    // cout << "Upbound: "<< UpBound << "\n";
 
-    if (((LowBound < angle(&drone_pos2, &drone_vec, &goal_point) && angle(&drone_pos2, &drone_vec, &goal_point) < UpBound) || angle(&drone_pos2, &drone_vec, &goal_point) == 0) && dist > 1){
-        cout << "STOP!" << "\n";
+    if (((angle > LowBound && angle < UpBound) || angle == 0) && dist > 1){
+        cout << "Forward!" << "\n";
         angular_control(0,0,0);
-        linear_control(15,0,0);
-        cond = false;
+        linear_control(35,0,0);
     }
     else if(dist < 1){
+        // cout << "Stop!" << "\n";
         angular_control(0,0,0);
         linear_control(0,0,0);
     }
     else{
         cout << "Rotating!" << "\n";
-        if(angle(&drone_pos2, &drone_vec, &goal_point) > 0){
-            angular_control(0,0,-10);
+        if(angle > 0){
+            angular_control(0,0,-1);
 
         }
         else{
-            angular_control(0,0,10);
+            angular_control(0,0,1);
         }
     }
     // if (dist > 1 && cond == false){
@@ -212,15 +226,14 @@ int main(int argc, char **argv)
     // ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
     ros::Subscriber subscribe_state = n.subscribe("/ground_truth/state", 1000, chatterCallback);
     ros::Subscriber subscriverpc = n.subscribe("/orb_slam2_mono/map_points", 1, xyz_callback);
-    ros::Publisher takeoff_pub = n.advertise<std_msgs::Empty>("ardrone/takeoff", 10);
+    takeoff_pub = n.advertise<std_msgs::Empty>("ardrone/takeoff", 10);
     ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
-    ros::Publisher land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
-    std_msgs::Empty msg;
+    land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
 
     ros::Rate loop_rate(30);
     while (ros::ok())
     {
-        takeoff_pub.publish(msg);
+        //takeoff_pub.publish(msg);
         calc();
         align();
         pub_vel.publish(twist);
