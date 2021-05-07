@@ -14,6 +14,8 @@
 std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
 double least_distance = 10000;
 geometry_msgs::Twist twist;
+bool cond = true;
+bool land = false;
 
 struct point
 {
@@ -33,18 +35,29 @@ struct quaternion orientation;
 struct point goal_point;
 double roll, pitch, yaw;
 double angle_2points;
+double slope_goal;
+double slope_drone;
+double dist;
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
-void linear_control(int x, int y)
+void linear_control(double x, double y, double z)
 {
     twist.linear.y = y; //l,r
     twist.linear.x = x; //f
+    twist.linear.z = z;
 }
 
-void yaw_control(int s)
+void angular_control(double r, double p, double y)
 {
-    twist.angular.z = s; //yaw
+    twist.angular.x = r;
+    twist.angular.y = p;
+    twist.angular.z = y; //yaw
+}
+
+void distance(point *Drone, point *Goal){
+    dist = ((sqrt(pow((Goal->x - Drone->x), 2) + (pow((Goal->y - Drone->y), 2)) * 10)));
+    std::cout << "Distance: " << dist << "\n";
 }
 
 void getAngles(quaternion *orientation)
@@ -74,12 +87,11 @@ void goal_vector(point *drone, point *goal)
     //std::cout << "Goal vector x: " << goal_vec.x << "  Goal vector y: " << goal_vec.y << "\n";
 }
 
-void slope(point *dronePos, point *droneVec, point *goalPoint)
+double angle(point *dronePos, point *droneVec, point *goalPoint)
 {
-
-    double slope_goal = round((goalPoint->y - dronePos->y) / (goalPoint->x - dronePos->x) * 100.0) / 100.0;
-    double slope_drone = round((droneVec->y - dronePos->y) / (droneVec->x - dronePos->x) * 100.0) / 100.0;
-    std::cout << "Slope goal: " << slope_goal << " Slope Drone: " << slope_drone << "\n";
+    double angle1 = atan2((droneVec->y - dronePos->y),(droneVec->x - dronePos->x));
+    double angle2 = atan2((goalPoint->y - dronePos->y),(goalPoint->x - dronePos->x));
+    return angle1 - angle2;
 }
 
 void measure_distance(std::vector<double> &x, std::vector<double> &y, std::vector<double> &z)
@@ -89,7 +101,7 @@ void measure_distance(std::vector<double> &x, std::vector<double> &y, std::vecto
     least_distance = 10000;
     for (int i = 0; i < x.size(); i++)
     {
-        distance.push_back((sqrt(pow((drone_pos.x - x[i]), 2) + (pow((drone_pos.y - y[i]), 2)) + (pow((drone_pos.z - z[i]), 2)))) * 10);
+        distance.push_back((sqrt(pow((drone_pos.x - x[i]), 2) + (pow((drone_pos.y - y[i]), 2)))));
         if (distance[i] < least_distance)
         {
             least_distance = distance[i];
@@ -135,12 +147,57 @@ void chatterCallback(const nav_msgs::Odometry::ConstPtr &msg)
     orientation.w = msg->pose.pose.orientation.w;
 }
 
-void angle()
+void calc()
 {
     getAngles(&orientation);
     drone_vector(&drone_pos2, yaw);
     goal_vector(&drone_pos2, &goal_point);
-    slope(&drone_pos2, &drone_vec, &goal_point);
+    cout << "Angle: " << angle(&drone_pos2, &drone_vec, &goal_point) << endl;
+    distance(&drone_pos2, &goal_point);
+}
+
+void align(){
+    double LowBound = angle(&drone_pos2, &drone_vec, &goal_point) - 0.087;
+    double UpBound = angle(&drone_pos2, &drone_vec, &goal_point) + 0.087;
+    
+    if(round(angle(&drone_pos2, &drone_vec, &goal_point)) != 0 && cond == true){
+        angular_control(0,0,10);
+        cout << "Rotating!" << "\n";
+    }
+
+    if (((LowBound < angle(&drone_pos2, &drone_vec, &goal_point) && angle(&drone_pos2, &drone_vec, &goal_point) < UpBound) || angle(&drone_pos2, &drone_vec, &goal_point) == 0) && dist > 1){
+        cout << "STOP!" << "\n";
+        angular_control(0,0,0);
+        linear_control(15,0,0);
+        cond = false;
+    }
+    else if(dist < 1){
+        angular_control(0,0,0);
+        linear_control(0,0,0);
+    }
+    else{
+        cout << "Rotating!" << "\n";
+        if(angle(&drone_pos2, &drone_vec, &goal_point) > 0){
+            angular_control(0,0,-10);
+
+        }
+        else{
+            angular_control(0,0,10);
+        }
+    }
+    // if (dist > 1 && cond == false){
+    //     linear_control(1,0,0);
+    //     angular_control(0,0,0);
+    //     cout << "Forward!" << "\n";
+    // }
+    //  if (dist < 1){
+    //      linear_control(0,0,0);
+    //      angular_control(0,0,0);
+    //      cout << "Landing!" << "\n";
+    //      land = true;
+    // }
+    //land_pub.publish(msg);
+
 }
 
 int main(int argc, char **argv)
@@ -149,25 +206,29 @@ int main(int argc, char **argv)
     goal_point.y = -10;
     goal_point.z = 0;
 
-    std::cout << "Initiated"
-              << "\n";
+    std::cout << "Initiated" << "\n";
     ros::init(argc, argv, "my_subscriber");
     ros::NodeHandle n;
     // ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 1000, tf_callback); //Topic_name, queue size and callback function.
     ros::Subscriber subscribe_state = n.subscribe("/ground_truth/state", 1000, chatterCallback);
     ros::Subscriber subscriverpc = n.subscribe("/orb_slam2_mono/map_points", 1, xyz_callback);
     ros::Publisher takeoff_pub = n.advertise<std_msgs::Empty>("ardrone/takeoff", 10);
-    ros::Publisher land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
     ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+    ros::Publisher land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
     std_msgs::Empty msg;
-    takeoff_pub.publish(msg);
 
+    ros::Rate loop_rate(30);
     while (ros::ok())
     {
-        angle();
-        //distance(drone_pos2.x,goal_point.x,drone_pos2.y,goal_point.y,drone_pos2.z,goal_point.z);
+        takeoff_pub.publish(msg);
+        calc();
+        align();
+        pub_vel.publish(twist);
+        // if (land == true){
+        //     land_pub.publish(msg);
+        // }
         ros::spinOnce();
-        // pub_vel.publish(twist);
+        loop_rate.sleep();
     }
 
     return (0);
