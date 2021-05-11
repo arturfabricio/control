@@ -29,7 +29,7 @@
             k_search: 0
             radius_search: 0.015
             # Set the spatial locator. Possible values are: 0 (ANN), 1 (FLANN), 2 (organized)
-            spatial_locator: 0
+            spatial_locator: 1
             </rosparam>
         </node>
 
@@ -84,11 +84,11 @@
                 </rosparam>
         </node>
 
-    <node name="static_tf0" pkg="tf" type="static_transform_publisher" args="2 0 0 0 0 0 /map /base_link 100"/>
-        <rosparam file="$(find control)/minimal.yaml" command="load" ns="/costmap_node/costmap" />
     <include file="$(find control)/launch/octomap_mapping.launch" >
         </include>
 
-
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="controller_frequency" value="30.0" />  
+    </node>
 
 </launch>

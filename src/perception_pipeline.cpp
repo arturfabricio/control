@@ -89,10 +89,10 @@ int main(int argc, char *argv[])
         {
             // if (cloud.points[i].z > 0.005)
             // {
-                newpoint.x = cloud.points[i].x - dronePoint.x;
-                newpoint.y = cloud.points[i].y - dronePoint.y;
-                newpoint.z = cloud.points[i].z - dronePoint.z;
-                update_cloud.push_back(newpoint);
+            newpoint.x = cloud.points[i].x - dronePoint.x;
+            newpoint.y = cloud.points[i].y - dronePoint.y;
+            newpoint.z = cloud.points[i].z - dronePoint.z;
+            update_cloud.push_back(newpoint);
             //}
         }
 
@@ -124,25 +124,6 @@ int main(int argc, char *argv[])
             new_cloud.push_back(newpoint);
         }
 
-        // // Transform PointCloud from Camera Frame to World Frame
-        // tf::TransformListener listener;
-        // tf::StampedTransform stransform;
-        // try
-        // {
-        //     listener.waitForTransform(world_frame, recent_cloud->header.frame_id, ros::Time::now(), ros::Duration(6.0));
-        //     listener.lookupTransform(world_frame, recent_cloud->header.frame_id, ros::Time(0), stransform);
-        // }
-        // catch (tf::TransformException ex)
-        // {
-        //     ROS_ERROR("%s", ex.what());
-        // }
-        // sensor_msgs::PointCloud2 transformed_cloud;
-        // pcl_ros::transformPointCloud(world_frame, stransform, *recent_cloud, transformed_cloud);
-
-        // // Convert PointCloud from ROS to PCL
-        // pcl::PointCloud<pcl::PointXYZ> cloud;
-        // pcl::fromROSMsg(transformed_cloud, cloud);
-
         //Voxel Grid Filtering
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_ptr(new pcl::PointCloud<pcl::PointXYZ>(new_cloud));
         pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_voxel_filtered(new pcl::PointCloud<pcl::PointXYZ>());
@@ -150,16 +131,6 @@ int main(int argc, char *argv[])
         voxel_filter.setInputCloud(cloud_ptr);
         voxel_filter.setLeafSize(float(0.01), float(0.01), float(0.01));
         voxel_filter.filter(*cloud_voxel_filtered);
-
-        // // Crop-Box Filtering
-        // pcl::PointCloud<pcl::PointXYZ> xyz_filtered_cloud;
-        // pcl::CropBox<pcl::PointXYZ> crop;
-        // crop.setInputCloud(cloud_voxel_filtered);
-        // Eigen::Vector4f min_point = Eigen::Vector4f(-1.5, -1.5, -1.5, 0);
-        // Eigen::Vector4f max_point = Eigen::Vector4f(1.5, 1.5, 1.5, 0);
-        // crop.setMin(min_point);
-        // crop.setMax(max_point);
-        // crop.filter(xyz_filtered_cloud);
 
         //Plane Segmentation
         pcl::PointCloud<pcl::PointXYZ>::Ptr cropped_cloud(new pcl::PointCloud<pcl::PointXYZ>(*cloud_voxel_filtered));
@@ -241,23 +212,6 @@ int main(int argc, char *argv[])
         sor.setStddevMulThresh(0.5);
 
         sor.filter(*sor_cloud_filtered);
-        
-
-        // pcl::PointCloud<pcl::PointXYZ>::Ptr centroid(new pcl::PointCloud<pcl::PointXYZ>);
-        // // centroid.points[0].x += sor_cloud_filtered->points[0].x;
-        // // centroid.points[0].y += sor_cloud_filtered->points[0].y;
-        // // centroid.points[0].z += sor_cloud_filtered->points[0].z;
-        // for (int i = 0; i < sor_cloud_filtered->points.size(); i++)
-        // {
-        //     centroid->points[0].x += sor_cloud_filtered->points[i].x;
-        //     centroid->points[0].y += sor_cloud_filtered->points[i].y;
-        //     centroid->points[0].z += sor_cloud_filtered->points[i].z;
-    
-        // }
-        // centroid->points[0].x = centroid->points[0].x/sor_cloud_filtered->points.size();
-        // centroid->points[0].y = centroid->points[0].y/sor_cloud_filtered->points.size();
-        // centroid->points[0].z = centroid->points[0].z/sor_cloud_filtered->points.size();
-
 
         // Convert PointCloud from PCL to ROS
         sensor_msgs::PointCloud2::Ptr pc2_cloud(new sensor_msgs::PointCloud2);
