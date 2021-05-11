@@ -17,6 +17,7 @@ geometry_msgs::Twist twist;
 bool land = false;
 bool obstacle_bool = false;
 bool avoidance_mode = false;
+bool find_points = true;
 bool ignore_var = true;
 ros::Publisher land_pub;
 ros::Publisher takeoff_pub;
@@ -40,8 +41,13 @@ struct point centroid_point;
 struct point drone_vec;
 struct point pose_vec;
 struct point goal_vec;
+struct point goal_vec1;
+struct point goal_vec2;
 struct point drone_pos;
 struct point drone_pos2;
+struct point alternative;
+struct point alternative1;
+struct point alternative2;
 struct quaternion orientation;
 struct quaternion pose_orientation;
 struct point goal_point;
@@ -50,7 +56,11 @@ double angle_2points;
 double slope_goal;
 double slope_drone;
 double dist;
+double angle1;
+double angle2;
 long double dist_obstacle = 1000;
+long double dist_alternative = 1000;
+
 
 typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
@@ -76,6 +86,11 @@ void distance(point *Drone, point *Goal){
 void distance2(point *Drone, point *Goal){
     dist_obstacle = ((sqrt(pow((Goal->x - Drone->x), 2) + (pow((Goal->y - Drone->y), 2)) * 10)));
     std::cout << "Distance Obstacle: " << dist_obstacle << "\n";
+}
+
+void distance3(point *Drone, point *Goal){
+    dist_alternative = ((sqrt(pow((Goal->x - Drone->x), 2) + (pow((Goal->y - Drone->y), 2)) * 10)));
+    std::cout << "Distance Alternative: " << dist_alternative << "\n";
 }
 
 void getAngles(quaternion *orientation)
@@ -142,21 +157,20 @@ void measure_distance(std::vector<double> &x, std::vector<double> &y, std::vecto
 void centroid(vector<double> x, vector<double> y, vector<double> z){
     double x_total;
     double y_total;
-
     for (int i = 0; i < x.size(); i++){
         x_total += x[i];
         y_total += y[i];
-        //z_total += z[i];
     }
-    if (x.size() < 100){
+    if (x.size() < 250){
         ignore_var = true;
-    }else if (x.size() > 100){
+    }else if (x.size() > 250){
         ignore_var = false;
     }
-    // cout << "Size points: " << x.size() << endl;
+    cout << "Size points: " << x.size() << endl;
     centroid_point.x = x_total/y.size();
     centroid_point.y = y_total/y.size();
-    //cout << "Centroid x: " << centroid_point.x << " Centroid y: " << centroid_point.y << "\n";
+
+    cout << "Centroid x: " << centroid_point.x << " Centroid y: " << centroid_point.y << "\n";
 }
 
 void tf_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
@@ -219,7 +233,6 @@ void calc()
     getAngles2(&pose_orientation);
     drone_vector(&drone_pos2, yaw);
     goal_vector(&drone_pos2, &goal_point);
-    distance(&drone_pos2, &goal_point);
     height_control(&drone_pos2);
     centroid(x_obstacle,y_obstacle,z_obstacle);
 }
@@ -231,34 +244,92 @@ void drone_vector_orb(point *vec, double angle)
     //std::cout << "Pose vector x: " << drone_vec.x << "  POse vector y: " << drone_vec.y << "\n";
 }
 
-// void goal_vector(point *drone, point *goal)
-// {
-//     goal_vec.x = -(goal->x - drone->x);
-//     goal_vec.y = (goal->y - drone->y);
-//     //std::cout << "goalX: " << goal->x << " goalY: " << goal->y << " droneX: " << drone->x << " droneY: " << drone->y << endl;
-//     //std::cout << "Goal vector x: " << goal_vec.x << "  Goal vector y: " << goal_vec.y << "\n";
-// }
+void goal_vector1(point *drone, point *goal)
+{
+    goal_vec1.x = -(goal->x - drone->x);
+    goal_vec1.y = (goal->y - drone->y);
+    //std::cout << "goalX: " << goal->x << " goalY: " << goal->y << " droneX: " << drone->x << " droneY: " << drone->y << endl;
+    //std::cout << "Goal vector x: " << goal_vec.x << "  Goal vector y: " << goal_vec.y << "\n";
+}
+
+void goal_vector2(point *drone, point *goal)
+{
+    goal_vec2.x = -(goal->x - drone->x);
+    goal_vec2.y = (goal->y - drone->y);
+    //std::cout << "goalX: " << goal->x << " goalY: " << goal->y << " droneX: " << drone->x << " droneY: " << drone->y << endl;
+    //std::cout << "Goal vector x: " << goal_vec.x << "  Goal vector y: " << goal_vec.y << "\n";
+}
+
+double theta2(point *dronePos, point *droneVec, point *goalPoint)
+{
+    double angle1 = atan2((droneVec->y - dronePos->y),(droneVec->x - dronePos->x));
+    double angle2 = atan2((goalPoint->y - dronePos->y),(goalPoint->x - dronePos->x));
+    return angle1 - angle2;
+}
+
+void move_to_alternative(point *goal, double angle_new){
+    cout << "Moving to alternative" << "\n";
+    double LowBound = -0.00872665;
+    double UpBound = 0.00872665;
+
+    if (((angle_new > LowBound && angle_new < UpBound) || angle_new == 0) && dist_alternative > 1.5 && obstacle_bool == true){
+        cout << "hererererererrere" << endl;
+        angular_control(0,0,0);
+        linear_control(100,0,0);
+    }
+    if(dist_alternative < 1.5){
+        cout << "At alternative!" << "\n";
+        avoidance_mode = false;
+        obstacle_bool = false;
+        angular_control(0,0,0);
+        linear_control(0,0,0);
+    }
+    else{
+        if(angle_new > 0 && obstacle_bool == true){
+            cout << "turning 1" << endl;
+            angular_control(100,0,-50);
+        }
+        else if(angle_new < 0 && obstacle_bool == true){
+            angular_control(100,0,50);
+            cout << "turning 2" << endl;
+        }
+    }
+}
 
 void avoidance_points(point *drone, point *obstacle){
-    if (obstacle_bool = true){
-        double slope = (obstacle->y - drone->y) / (obstacle->x - drone->x);
-        double b = obstacle->y/(-slope*obstacle->x);
-        double new_point1 = -slope*(obstacle->x + 2)+b;
-        double new_point2 = -slope*(obstacle->x - 2)+b;
-        //std::cout << "New Point 1 x: " << obstacle->x << "  New Point 1 y: " << new_point1 << "\n";
-        //std::cout << "New Point 2 x: " << obstacle->x << "  New Point 2 y: " << new_point2 << "\n";
-        //drone_vector_orb(&drone_pos,yaw);
-        //alternative_point(&drone_pos, obstacle->x, obstacle->x, new_point1, new_point2);
-        // cout << "Aternative Point x: " << alternative.x << " Alternative Point y: " << alternative.y << "\n";
-        // move_to_alternative(&alternative);
+    cout << "Avoidance function" << endl;
+    drone_vector_orb(&drone_pos,yaw); //pose_vec
+    goal_vector1(&drone_pos, &centroid_point); //goal_vec1
+    angle1 = theta2(&drone_pos, &pose_vec, &goal_vec1);
+    if(find_points == true){
+    if (obstacle_bool == true){
+        double t = 0.785398;
+            angular_control(0,0,0);
+            linear_control(0,0,0);
+            if (angle1 < 0){
+                alternative.x = (cos(t)*pose_vec.x - sin(t)*pose_vec.y);
+                alternative.y = sin(t)*pose_vec.x + cos(t)*pose_vec.y;
+            }
+            if (angle1 > 0){
+                alternative.x = cos(-t)*pose_vec.x - sin(-t)*pose_vec.y;
+                alternative.y = sin(-t)*pose_vec.x + cos(-t)*pose_vec.y;
+            find_points = false;
+            }
+        
+    }
+        std::cout << "New Point 1 x: " << alternative.x << "  New Point 1 y: " << alternative.y << "\n";
+        angle2 = theta(&drone_pos, &pose_vec, &alternative);
+        distance3(&drone_pos,&alternative);
+        move_to_alternative(&alternative,angle2);
     }
 }
 
 void align(){
-    if (dist_obstacle < 0.30 && ((centroid_point.x > 0 || centroid_point.x < 0 ) && (centroid_point.y > 0 || centroid_point.y < 0 )) && ignore_var == false){
+    distance(&drone_pos2, &goal_point);
+    if (dist_obstacle < 0.4 && ((centroid_point.x > 0 || centroid_point.x < 0 ) && (centroid_point.y > 0 || centroid_point.y < 0 )) && ignore_var == false){
         //cout << "Bool_true" << endl;
         obstacle_bool = true;
-    }else if(dist_obstacle > 0.30 && ((centroid_point.x > 0 || centroid_point.x < 0 ) && (centroid_point.y > 0 || centroid_point.y < 0 ))){
+    }else if(dist_obstacle > 0.4 && ((centroid_point.x > 0 || centroid_point.x < 0 ) && (centroid_point.y > 0 || centroid_point.y < 0 )) && avoidance_mode == false ){
         //cout << "Bool_false" << endl;
         obstacle_bool = false;
     }
@@ -273,7 +344,7 @@ void align(){
         if (((angle > LowBound && angle < UpBound) || angle == 0) && dist > 1){
             //cout << "Forward!" << "\n";
             angular_control(0,0,0);
-            linear_control(0.5,0,0);
+            linear_control(50,0,0);
         }
         else if(dist < 1){
             cout << "Arrived at goal!" << "\n";
@@ -283,15 +354,15 @@ void align(){
         else{
             //cout << "Rotating!" << "\n";
             if(angle > 0){
-                angular_control(0,0,-3);
+                angular_control(0,0,-50);
             }
             else{
-                angular_control(0,0,3);
+                angular_control(0,0,50);
             }
         }
     }
     if (obstacle_bool == true){
-        cout << "Obstacle Detected, stopping!" << endl;
+        cout << "Obstacle Detected!" << endl;
         avoidance_mode = true;
         angular_control(0,0,0);
         linear_control(0,0,0);
@@ -302,7 +373,7 @@ void align(){
 int main(int argc, char **argv)
 {
     goal_point.x = 0;
-    goal_point.y = 0;
+    goal_point.y = -10;
     goal_point.z = 0;
 
     std::cout << "Initiated" << "\n";
