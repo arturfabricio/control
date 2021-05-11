@@ -277,7 +277,7 @@ void move_to_alternative(point *goal, double angle_new){
         angular_control(0,0,0);
         linear_control(100,0,0);
     }
-    if(dist_alternative < 1.5){
+    if(dist_alternative < 1){
         cout << "At alternative!" << "\n";
         avoidance_mode = false;
         obstacle_bool = false;
