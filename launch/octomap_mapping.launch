@@ -18,7 +18,7 @@
 		<param name="sensor_model/max_range" value="100" />
 		
 		<!-- data source to integrate (PointCloud2) -->
-		<remap from="cloud_in" to="/orb_slam2_mono/map_points" />
+		<remap from="cloud_in" to="/statisticalOutliers/output" />
 	
 	</node>
 </launch>
