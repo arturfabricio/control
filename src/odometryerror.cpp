@@ -26,7 +26,7 @@ ros::Publisher land_pub;
 std_msgs::Empty msg;
 double least_distance = 10000;
 bool new_point = false;
-auto start_time = Clock::now();
+bool reached_point = false;
 
 struct point
 {
@@ -51,8 +51,8 @@ double slope_goal;
 double slope_drone;
 double dist;
 
-std::vector<double> x_position({0, -15, 0, 15, 0});
-std::vector<double> y_position({20, 0, -20, 0, 20});
+std::vector<double> x_position({0,-15, 0, 15, 0});
+std::vector<double> y_position({20,0, -20, 0, 20});
 std::vector<double> z_position({0, 0, 0, 0, 0});
 
 clock_t timer_s;
@@ -180,18 +180,6 @@ void height_control(point *Drone){
     }
 }
 
-// void storepose(point *posDrone){
-//     std::fstream poseData;
-//     auto current_time = Clock::now();
-//     poseData.open("poseData.csv", ios::out);
-//     poseData << "x" << "," << "y" << "," << "z" << "\n";
-//     // if(start_time )
-//     //     poseData << posDrone->x << "," << posDrone->y << "," << posDrone->z << "\n";
-//     // }
-//     // poseData.close();
-// }
-
-
 void calc()
 {
     getAngles(&orientation);
@@ -217,18 +205,51 @@ void align(){
     }
     else if(dist < 1){
         cout << "Stop!" << "\n";
-        new_point = true;
+        int i;
+        reached_point = true;
         angular_control(0,0,0);
         linear_control(0,0,0);
-        goal_point.x = x_position[2];
-        goal_point.y = y_position[2];
-        goal_point.z = z_position[2];
 
-        // if((goal_point.x == x_position[1]) && (goal_point.y == y_position[1]) && new_point == true){
-        //     goal_point.x = x_position[2];
-        //     goal_point.y = y_position[2];
-        //     goal_point.z = z_position[2];
-        // }
+        switch (i)
+        {
+            case (0):
+                goal_point.x = x_position[1]; 
+                goal_point.y = y_position[1];
+                goal_point.z = z_position[1];
+                break;
+            case (1):
+                goal_point.x = x_position[2]; 
+                goal_point.y = y_position[2];
+                goal_point.z = z_position[2];
+                break;
+            case (2):
+                goal_point.x = x_position[3]; 
+                goal_point.y = y_position[3];
+                goal_point.z = z_position[3];
+                break;
+            case (3):
+                goal_point.x = x_position[4]; 
+                goal_point.y = y_position[4];
+                goal_point.z = z_position[4];
+                break;
+            default:
+                reached_point = false;
+                break;
+        }
+        i++;
+
+
+        // if(reached_point = true){
+        //     for(int i = 0; i < x_position.size(); i++){
+        //         goal_point.x = x_position[i]; 
+        //         goal_point.y = y_position[i];
+        //         goal_point.z = z_position[i];
+        //         reached_point = false;
+        //     }
+                
+        // } 
+        
+
 
     }
     else{
@@ -258,9 +279,9 @@ void align(){
 
 int main(int argc, char **argv)
 {
-    goal_point.x = x_position[1];
-    goal_point.y = y_position[1];
-    goal_point.z = z_position[1];
+    goal_point.x = x_position[0];
+    goal_point.y = y_position[0];
+    goal_point.z = z_position[0];
 
     std::cout << "Initiated" << "\n";
     ros::init(argc, argv, "my_subscriber");
@@ -290,7 +311,6 @@ int main(int argc, char **argv)
         cout << "timer_end - timer_s: " << current_time << "\n";
         if(current_time == 40){
             poseData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos2.z << "\n";
-        
         }
         pub_vel.publish(twist);
         // if (land == true){
