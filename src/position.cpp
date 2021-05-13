@@ -10,6 +10,7 @@
 #include <boost/foreach.hpp>
 #include "controller.h"
 #include <tf/tf.h>
+#include <numeric>
 
 std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
 double least_distance = 10000;
@@ -49,7 +50,6 @@ struct point alternative;
 struct quaternion orientation;
 struct quaternion pose_orientation;
 struct point goal_point;
-double roll, pitch, yaw, roll2, pitch2, yaw2;
 double angle_2points;
 double slope_goal;
 double slope_drone;
@@ -84,11 +84,13 @@ double distance(point *Drone, point *Goal){
     //std::cout << "Distance: " << dist << "\n";
 }
 
-void getAngles(quaternion *orientation)
+double getAngles(quaternion *orientation)
 {
+    double roll, pitch, yaw;
     tf::Quaternion q(orientation->x, orientation->y, orientation->z, orientation->w);
     tf::Matrix3x3 m(q);
     m.getRPY(roll, pitch, yaw);
+    return yaw;
     //std::cout << "Yaw: " << yaw << "\n";
 }
 
@@ -202,13 +204,19 @@ void height_control(point *Drone){
     }
 }
 
+double dot_product (point a, point b){
+    double top =  a.x*b.x + a.y*b.y;
+    double bottom = sqrt(pow(a.x,2)+pow(a.y,2)) * sqrt(pow(b.x,2)+pow(b.y,2));
+    return acos(top/bottom);
+}
+
 void align(point *pos, point *goal){
     
     if (new_goal == false){
-        getAngles(&orientation);
+        double yaw = getAngles(&orientation);
         drone_vector(pos, yaw);
         goal_vector(pos, goal);
-        distance(pos, goal);
+
         double dis_goal = distance(pos,goal);
         cout << "Dis_obstacle: " << dis_obstacle << "\n";
         // cout << "Moving toward final goal" << endl;
@@ -269,22 +277,34 @@ void align(point *pos, point *goal){
         double angle = theta(pos, &drone_vec, goal);
         cout << "The angle: " << angle << endl;
         cout << "The distance: " << dis_obstacle << endl;
+        // double yaw = getAngles(&pose_orientation);
+        // drone_vector(pos,yaw); //drone_vec
+        // goal_vector(pos,goal); //goal_vec
+
+        // double angle_dot = dot_product(drone_vec,goal_vec);
+        // cout << "Angle: " << angle_dot << endl;
+
         if (dis_obstacle < 1){
-            if(angle > 0){
-                cout << "moving right" << endl;
-                linear_control(0,-100,0);
+            if(angle > 0 && angle < 1.57){
+                cout << "rotating right" << endl;
+                angular_control(0,0,100);
+            }
+            else if (angle < 0 && angle > 1.57)
+            {
+                cout << "rotating left" << endl;
+                angular_control(0,0,-100);
             }
             else{
-                cout << "moving left" << endl;
-                linear_control(0,100,0);
+                linear_control(100,0,0);
             }
         }
         else if(dis_obstacle > 1){
             cout << "back to normal" << endl;
-            // new_goal = false;
+            new_goal = false;
         }
     }       
 }
+
 
 
 void calc()
@@ -299,7 +319,7 @@ void calc()
     }
     else if (new_goal == true){
         cout << "Moving to Alternative Point" << endl;
-        align(&drone_pos2,&centroid_point);
+        align(&drone_pos,&centroid_point);
     }
 }
 
@@ -323,7 +343,7 @@ int main(int argc, char **argv)
     while (ros::ok())
     {
         calc();
-        // pub_vel.publish(twist);
+        pub_vel.publish(twist);
         ros::spinOnce();
         loop_rate.sleep();
     }
