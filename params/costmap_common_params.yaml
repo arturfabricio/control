@@ -3,7 +3,12 @@ raytrace_range: 3.0
 #footprint: [[0, 0], [0, 0]
 robot_radius: 0.1
 inflation_radius: 0.1
-
 observation_sources: point_cloud_sensor
-
-point_cloud_sensor: {sensor_frame: base_link, data_type: PointCloud, topic: /statisticalOutliers/output, marking: true, clearing: true}
+point_cloud_sensor:
+  {
+    sensor_frame: base_link,
+    data_type: PointCloud2,
+    topic: /statisticalOutliers/output,
+    marking: true,
+    clearing: true,
+  }
