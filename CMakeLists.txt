@@ -157,6 +157,11 @@ add_executable(tf_listener src/tf_listener.cpp)
 target_link_libraries(tf_broadcaster ${catkin_LIBRARIES})
 target_link_libraries(tf_listener ${catkin_LIBRARIES})
 
+add_executable(odometryerror src/odometryerror.cpp)
+add_dependencies(odometryerror ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(odometryerror
+ ${catkin_LIBRARIES}
+)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
