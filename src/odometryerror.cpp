@@ -51,9 +51,9 @@ double slope_goal;
 double slope_drone;
 double dist;
 
-std::vector<double> x_position({0,-15, 0, 15, 0});
-std::vector<double> y_position({20,0, -20, 0, 20});
-std::vector<double> z_position({0, 0, 0, 0, 0});
+std::vector<double> x_position({-15, 0, 15, 0});
+std::vector<double> y_position({0, -20, 0, 20});
+std::vector<double> z_position({0, 0, 0, 0});
 
 clock_t timer_s;
 clock_t timer_end;
@@ -197,7 +197,6 @@ void align(){
     double UpBound = 0.00872665*dist/10;
     // cout << "LowBound: "  << LowBound << "\n";
     // cout << "Upbound: "<< UpBound << "\n";
-    double i = 0;
     if (((angle > LowBound && angle < UpBound) || angle == 0) && dist > 1){
         std::cout << "Forward!" << "\n";
         angular_control(0,0,0);
@@ -208,43 +207,49 @@ void align(){
         reached_point = true;
         angular_control(0,0,0);
         linear_control(0,0,0);
+        if (reached_point = true){
+            double i;
+            switch (i)
+            {
+                case (i = 1):
+                    goal_point.x = x_position[1]; 
+                    goal_point.y = y_position[1];
+                    goal_point.z = z_position[1];
+                    std::cout << "In case 0" << "\n"; 
+                    i++;
+                    break;
+                case (i == 2):
+                    goal_point.x = x_position[2]; 
+                    goal_point.y = y_position[2];
+                    goal_point.z = z_position[2];
+                    std::cout << "In case 1" << "\n"; 
+                    i++;
+                    break;
+                case (3):
+                    goal_point.x = x_position[3]; 
+                    goal_point.y = y_position[3];
+                    goal_point.z = z_position[3];
+                    std::cout << "In case 2" << "\n"; 
+                    i++;
+                    break;
+                // case (3):
+                //     goal_point.x = x_position[3]; 
+                //     goal_point.y = y_position[3];
+                //     goal_point.z = z_position[3];
+                //     std::cout << "In case 3" << "\n"; 
+                //     i++;
+                //     break;
+                default:
+                    reached_point = false;
+                    std::cout << "breaking default" << "\n"; 
+                    i++;
+                    break;
+                }
 
-        switch (reached_point = true && i)
-        {
-            case (0):
-                goal_point.x = x_position[1]; 
-                goal_point.y = y_position[1];
-                goal_point.z = z_position[1];
-                i++;
-                reached_point = false;
-                break;
-            case (1):
-                goal_point.x = x_position[2]; 
-                goal_point.y = y_position[2];
-                goal_point.z = z_position[2];
-                i++;
-                reached_point = false;
-                break;
-            case (2):
-                goal_point.x = x_position[3]; 
-                goal_point.y = y_position[3];
-                goal_point.z = z_position[3];
-                i++;
-                reached_point = false;
-                break;
-            case (3):
-                goal_point.x = x_position[4]; 
-                goal_point.y = y_position[4];
-                goal_point.z = z_position[4];
-                i++;
-                reached_point = false;
-                break;
-            default:
-                reached_point = false;
-                break;
         }
         
         
+        reached_point= false;
 
         // if(reached_point = true){
         //     for(int i = 0; i < x_position.size(); i++){
