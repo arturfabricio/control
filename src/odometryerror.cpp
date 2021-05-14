@@ -199,55 +199,71 @@ void align()
     double UpBound = 0.00872665 * dist / 10;
     // cout << "LowBound: "  << LowBound << "\n";
     // cout << "Upbound: "<< UpBound << "\n";
-
+    double i = 0;
     if (((angle > LowBound && angle < UpBound) || angle == 0) && dist > 1)
     {
-        cout << "Forward!"
-             << "\n";
+        std::cout << "Forward!"
+                  << "\n";
         angular_control(0, 0, 0);
         linear_control(500, 0, 0);
     }
     else if (dist < 1)
     {
-        cout << "Stop!"
-             << "\n";
-        int i;
+        std::cout << "Stop!"
+                  << "\n";
         reached_point = true;
         angular_control(0, 0, 0);
         linear_control(0, 0, 0);
 
-        switch (i)
+        switch (reached_point = true && i)
         {
         case (0):
             goal_point.x = x_position[1];
             goal_point.y = y_position[1];
             goal_point.z = z_position[1];
+            i++;
+            reached_point = false;
             break;
         case (1):
             goal_point.x = x_position[2];
             goal_point.y = y_position[2];
             goal_point.z = z_position[2];
+            i++;
+            reached_point = false;
             break;
         case (2):
             goal_point.x = x_position[3];
             goal_point.y = y_position[3];
             goal_point.z = z_position[3];
+            i++;
+            reached_point = false;
             break;
         case (3):
             goal_point.x = x_position[4];
             goal_point.y = y_position[4];
             goal_point.z = z_position[4];
+            i++;
+            reached_point = false;
             break;
         default:
             reached_point = false;
             break;
         }
-        i++;
+
+        // if(reached_point = true){
+        //     for(int i = 0; i < x_position.size(); i++){
+        //         goal_point.x = x_position[i];
+        //         goal_point.y = y_position[i];
+        //         goal_point.z = z_position[i];
+        //         reached_point = false;
+        //     }
+
+        // }
     }
     else
     {
-        cout << "Rotating!"
-             << "\n";
+        std::cout << "Rotating!"
+                  << "\n";
         if (angle > 0)
         {
             angular_control(0, 0, -1);
@@ -257,6 +273,20 @@ void align()
             angular_control(0, 0, 1);
         }
     }
+
+    std::cout << "i is valued: " << i << "\n";
+    // if (dist > 1 && cond == false){
+    //     linear_control(1,0,0);
+    //     angular_control(0,0,0);
+    //     cout << "Forward!" << "\n";
+    // }
+    //  if (dist < 1){
+    //      linear_control(0,0,0);
+    //      angular_control(0,0,0);
+    //      cout << "Landing!" << "\n";
+    //      land = true;
+    // }
+    //land_pub.publish(msg);
 }
 
 int main(int argc, char **argv)
@@ -295,19 +325,18 @@ int main(int argc, char **argv)
         align();
         timer_end = clock();
         //takeoff_pub.publish(msg);
+<<<<<<< HEAD
         current_time = timer_end - timer_s;
         cout << "timer_end - timer_s: " << current_time << "\n";
-        if (current_time == 40)
-        {
-            poseData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos2.z << "\n";
-        }
-        pub_vel.publish(twist);
-        // if (land == true){
-        //     land_pub.publish(msg);
-        // }
-        ros::spinOnce();
-        loop_rate.sleep();
+>>>>>>> b0a1444dbf793640c98b11d7c9c4ed45d5d63807
+        poseData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos2.z << "\n";
     }
+    // if (land == true){
+    //     land_pub.publish(msg);
+    // }
+    ros::spinOnce();
+    loop_rate.sleep();
+}
 
-    return (0);
+return (0);
 }
