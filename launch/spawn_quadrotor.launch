@@ -2,8 +2,8 @@
 
  <launch>
    <arg name="model" default="$(find cvg_sim_gazebo)/urdf/quadrotor.urdf.xacro"/>
-   <arg name="x" default="0"/>
-   <arg name="y" default="20"/>
+   <arg name="x" default="6"/>
+   <arg name="y" default="24"/>
    <arg name="z" default="0.5"/>
    <arg name="R" default="0"/>
    <arg name="P" default="0"/>
