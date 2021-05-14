@@ -286,8 +286,8 @@ void calc()
 
 int main(int argc, char **argv)
 {
-    goal_point.x = 6;
-    goal_point.y = -24;
+    goal_point.x = -5;
+    goal_point.y = -16;
     goal_point.z = 0;
 
     std::cout << "Initiated"
