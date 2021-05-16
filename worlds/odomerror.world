@@ -24,10 +24,10 @@
       <shadows>1</shadows>
     </scene>
     <state world_name='default'>
-      <sim_time>3345 647000000</sim_time>
-      <real_time>247 236320399</real_time>
-      <wall_time>1621160227 835798520</wall_time>
-      <iterations>246072</iterations>
+      <sim_time>3861 191000000</sim_time>
+      <real_time>517 177674675</real_time>
+      <wall_time>1621161705 458930488</wall_time>
+      <iterations>515544</iterations>
       <model name='mud_box_many'>
         <pose frame=''>0.106351 0.032142 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -339,10 +339,10 @@
         </link>
       </model>
       <model name='pine_tree_clone_0'>
-        <pose frame=''>-17.813 0.304591 0 0 -0 0</pose>
+        <pose frame=''>-18.4062 0.260763 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-17.813 0.304591 0 0 -0 0</pose>
+          <pose frame=''>-18.4062 0.260763 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -359,10 +359,10 @@
         </link>
       </model>
       <model name='pine_tree_clone_2'>
-        <pose frame=''>18.7485 -0.082518 0 0 -0 0</pose>
+        <pose frame=''>19.0831 -0.117102 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>18.7485 -0.082518 0 0 -0 0</pose>
+          <pose frame=''>19.0831 -0.117102 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -414,7 +414,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>2.40773 30.9959 87.2302 0 1.29492 -1.61873</pose>
+        <pose frame=''>-17.8128 19.3893 70.7553 0 1.29492 -1.61873</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
