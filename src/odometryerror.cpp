@@ -16,11 +16,7 @@
 #include <time.h>
 
 const double speed = 100;
-clock_t timer_s;
-clock_t timer_end;
-clock_t current_time;
 
- 
 using namespace std;
 
 std::vector<geometry_msgs::PoseStamped::ConstPtr> pose;
@@ -200,9 +196,11 @@ int main(int argc, char **argv)
     ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
     land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
 
-    ofstream PoseData;
-    PoseData.open("PoseData.csv");
-    PoseData << "x" << "," << "y" << "," << "z" << "\n";
+    ofstream GTData, DPose;
+    GTData.open("GroundTruth.csv");
+    GTData << "X" << "," << "Y" << "," << "Z" << "\n";
+    DPose.open("DronePosition.csv");
+    DPose << "X" << "," << "Y" << "," << "Z" << "\n";
 
     ros::Rate loop_rate(30);
     while (ros::ok())
@@ -213,7 +211,7 @@ int main(int argc, char **argv)
         loop_rate.sleep();
         if(at_goal){
             cout << "At goal" << endl;
-            PoseData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos.z << "\n";
+            GTData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos.z << "\n";
             i++;
             if(i > 7){
                 i = 0;
