@@ -29,9 +29,9 @@ ros::Publisher land_pub;
 ros::Publisher takeoff_pub;
 std_msgs::Empty msg;
 
-std::vector<double> x_position({15, 0, -15, 0});
-std::vector<double> y_position({0, -20, 0, 20});
-std::vector<double> z_position({0, 0, 0, 0});
+std::vector<double> x_position({10, 15,  10,  0, -10, -15, -10, 0});
+std::vector<double> y_position({15,  0, -15,-20, -15,   0,  15, 20});
+std::vector<double> z_position({ 0,  0,   0,  0,   0,   0,   0, 0});
 
 struct point
 {
@@ -186,6 +186,7 @@ void calc()
 int main(int argc, char **argv)
 {
     int i = 0;
+    
     goal_point.x = x_position[i];
     goal_point.y = y_position[i];
     goal_point.z = z_position[i];
@@ -206,17 +207,15 @@ int main(int argc, char **argv)
     ros::Rate loop_rate(30);
     while (ros::ok())
     {
-        
-        timer_s = clock();
         calc();
-        timer_end = clock();
         pub_vel.publish(twist);
         ros::spinOnce();
         loop_rate.sleep();
         if(at_goal){
             cout << "At goal" << endl;
+            PoseData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos.z << "\n";
             i++;
-            if(i > 3){
+            if(i > 7){
                 i = 0;
             }
             at_goal = false;
@@ -225,11 +224,6 @@ int main(int argc, char **argv)
         goal_point.y = y_position[i];
         goal_point.z = z_position[i];
 
-        current_time = timer_end - timer_s;
-        if(current_time = 40){
-            PoseData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos.z << "\n";
-        }
-        
 
 
     }
