@@ -13,7 +13,7 @@
 #include <std_msgs/Empty.h>
 #include <geometry_msgs/Twist.h>
 #include <fstream>
-#include <time.h>
+#include <chrono>
 
 const double speed = 100;
 
@@ -25,9 +25,9 @@ ros::Publisher land_pub;
 ros::Publisher takeoff_pub;
 std_msgs::Empty msg;
 
-std::vector<double> x_position({10, 15,  10,  0, -10, -15, -10, 0});
-std::vector<double> y_position({15,  0, -15,-20, -15,   0,  15, 20});
-std::vector<double> z_position({ 0,  0,   0,  0,   0,   0,   0, 0});
+std::vector<double> x_position({15,  0,  -15,  0});
+std::vector<double> y_position({ 0, -20,  0,   20});
+std::vector<double> z_position({ 0,  0,   0,    0});
 
 struct point
 {
@@ -105,9 +105,6 @@ void tf_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
     pose.push_back(msg);
 }
 
-void xyz_callback(const PointCloud::ConstPtr &msg)
-{
-}
 
 void groundThruth_Callback(const nav_msgs::Odometry::ConstPtr &msg)
 {
@@ -179,6 +176,22 @@ void calc()
     to_goal(drone_pos2, goal_point);
 }
 
+void UpdateCSV(){
+    ofstream GTData, DPose;
+    chrono::time_point<chrono::system_clock> start_time;//, end_time;
+    start_time = chrono::system_clock::now();
+    GTData.open("GroundTruth.csv");
+    GTData << "X" << "," << "Y" << "," << "Z" << "\n";
+    DPose.open("DronePosition.csv");
+    DPose << "X" << "," << "Y" << "," << "Z" << "\n";
+    long secondsElapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now()-start_time).count(); 
+    if(secondsElapsed == 10){
+        GTData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos2.z << endl;
+        DPose << drone_pos.x << "," << drone_pos.y << "," << drone_pos.z << endl;
+    }
+}
+
+
 int main(int argc, char **argv)
 {
     int i = 0;
@@ -196,24 +209,19 @@ int main(int argc, char **argv)
     ros::Publisher pub_vel = n.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
     land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
 
-    ofstream GTData, DPose;
-    GTData.open("GroundTruth.csv");
-    GTData << "X" << "," << "Y" << "," << "Z" << "\n";
-    DPose.open("DronePosition.csv");
-    DPose << "X" << "," << "Y" << "," << "Z" << "\n";
-
+    
     ros::Rate loop_rate(30);
     while (ros::ok())
     {
         calc();
+        UpdateCSV();
         pub_vel.publish(twist);
         ros::spinOnce();
         loop_rate.sleep();
         if(at_goal){
             cout << "At goal" << endl;
-            GTData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos.z << "\n";
             i++;
-            if(i > 7){
+            if(i > 3){
                 i = 0;
             }
             at_goal = false;
@@ -221,6 +229,7 @@ int main(int argc, char **argv)
         goal_point.x = x_position[i];
         goal_point.y = y_position[i];
         goal_point.z = z_position[i];
+        
 
 
 
