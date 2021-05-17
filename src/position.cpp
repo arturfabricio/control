@@ -12,6 +12,8 @@
 #include <numeric>
 #include <std_msgs/Empty.h>
 #include <geometry_msgs/Twist.h>
+#include <fstream>
+#include <iomanip>
 
 const double speed = 100;
  
@@ -176,7 +178,7 @@ void to_goal(point pos, point goal){
     };
     double dis_goal = distance(pos, goal);
     cout << "Dis_obstacle: " << dis_obstacle << "\n";
-    cout << "x_obstacle Size: " << x_obstacle.size() << endl;
+    //cout << "x_obstacle Size: " << x_obstacle.size() << endl;
     double threshold = 2;
     // cout << "Moving toward final goal" << endl;
     if (dis_obstacle < threshold && x_obstacle.size() > 20)
@@ -227,33 +229,33 @@ void avoid_obstacle(point pos, point obstacle){
         // cout << "Moving toward alternative" << endl;
         double angle = angle_to_point(pos, obstacle, orientation) + 1.57;
         double dis_obstacle = distance(pos, obstacle);
-        double threshold = 2;
+        double threshold = 2.2;
 
-        cout << "The angle: " << angle << endl;
-        cout << "The distance_obstacle: " << dis_obstacle << endl;
+        //cout << "The angle: " << angle << endl;
+        //cout << "The distance_obstacle: " << dis_obstacle << endl;
 
         if (dis_obstacle < threshold)
         {
             if (angle > 0 && angle < 1.15)
             {
-                cout << "rotating left" << endl;
+                //cout << "rotating left" << endl;
                 angular_control(0, 0, speed);
             }
             else if (angle < 0 && angle > -1.15)
             {
-                cout << "rotating right" << endl;
+                //cout << "rotating right" << endl;
                 angular_control(0, 0, -speed);
             }
             else
             {
-                cout << "Moving forward" << endl;
+                //cout << "Moving forward" << endl;
                 angular_control(0,0,0);
                 linear_control(speed, 0, 0);
             }
         }
         else
         {
-            cout << "back to normal" << endl;
+            //cout << "back to normal" << endl;
             new_goal = false;
         }
         
@@ -305,11 +307,11 @@ int main(int argc, char **argv)
     while (ros::ok())
     {
         calc();
-        pub_vel.publish(twist);
+        //pub_vel.publish(twist);
         ros::spinOnce();
         loop_rate.sleep();
         if(at_goal){
-            land_pub.publish(msg);
+            // land_pub.publish(msg);
             break;
         } 
     }
