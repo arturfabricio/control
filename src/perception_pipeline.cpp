@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_x;
         pass_x.setInputCloud(update_cloud_ptr);
         pass_x.setFilterFieldName("x");
-        pass_x.setFilterLimits(-0.5, 0.5);
+        pass_x.setFilterLimits(-0.2, 0.5);
         pass_x.filter(xf_cloud);
 
         //y-direction

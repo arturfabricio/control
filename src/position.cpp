@@ -13,8 +13,8 @@
 #include <std_msgs/Empty.h>
 #include <geometry_msgs/Twist.h>
 
-const double speed = 1;
-const double threshold = 1;
+const double speed = 100;
+const double threshold = 1.5;
 
 using namespace std;
 
