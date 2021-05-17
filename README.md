@@ -1,6 +1,6 @@
 # Monocular SLAM for UAVs in Forest Environment
 
-This project was developed troughout the spring semester of 2021, at Aalborg University. The purpose of this project was to implement monoSLAM into a small UAV (Parrot AR drone) with the purpose of performing Search and Rescue operations in a forest environment. The project is supported on the use of the ORB-SLAM2 library for ROS and the Tum Simulator for the drone.
+This project was developed throughout the spring semester of 2021, at Aalborg University. The purpose of this project was to implement monoSLAM into a small UAV (Parrot AR drone) with the purpose of performing Search and Rescue operations in a forest environment. The project is supported on the use of the ORB-SLAM2 library for ROS and the Tum Simulator for the drone.
 
 This project was developed and tested for Ubuntu 18.04 + ROS Melodic + Gazebo 9.
 
@@ -10,12 +10,10 @@ In order to run this project, you will need to install the following dependencie
 
 [ORB-SLAM2 (ros)](http://wiki.ros.org/orb_slam2_ros)<br/>
 [Tum Simulator (melodic)](https://github.com/surajmahangade/tum_simulator_melodic)<br/>
-[ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purpose, not mandatory<br/>
-[octomap](http://wiki.ros.org/octomap)<br/>
-[octomap_mapping](http://wiki.ros.org/octomap_mapping)<br/>
+[ardrone_joystick](https://github.com/acpopescu/ardrone_joystick) - just for testing purposes, not mandatory<br/>
 [Hector-gazebo packages](https://answers.ros.org/question/281462/drone-keeps-rising-in-simulation-after-takeoff/) <br/>
-
-Please follow all the instructions on the above websites on how to install these dependencies
+[PCL](https://pointclouds.org/downloads/#linux)<br/>
+[pcl_ros](http://wiki.ros.org/pcl_ros)<br/>
 
 ## Installation
 
@@ -42,13 +40,13 @@ mkdir -p ~/catkin_ws/src
 ##### Aptitude packages:
 
 ```bash
-sudo apt install libeigen3-dev libsdl1.2-dev ros-melodic-octomap ros-melodic-hector-gazebo ros-melodic-hector-sensors-gazebo ros-melodic-hector-xacro-tools
+sudo apt install libeigen3-dev libsdl1.2-dev ros-melodic-hector-gazebo ros-melodic-hector-sensors-gazebo ros-melodic-hector-xacro-tools libpcl-dev ros-melodic-pcl-ros
 ```
 
 ##### Clone the repositories into the src directory of your catkin workspace:
 
 ```bash
-git clone https://github.com/surajmahangade/tum_simulator_melodic.git && git clone https://github.com/dsapandora/ardrone_autonomy.git && git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git && git clone https://github.com/OctoMap/octomap_mapping.git
+git clone https://github.com/surajmahangade/tum_simulator_melodic.git && git clone https://github.com/dsapandora/ardrone_autonomy.git && git clone https://github.com/appliedAI-Initiative/orb_slam_2_ros.git
 ```
 
 ### Installing the package:<br/>
@@ -74,7 +72,7 @@ source devel/setup.bash
 
 ## Usage
 
-We currently only have a test .launch file which starts the simulation, ORB-SLAM2, rviz and joystick control. Test by typing the following on a terminal:
+The test.launch file starts the simulation, rviz and joystick control. Run it by typing the following in a terminal:
 
 ```bash
 roslaunch control test.launch
@@ -86,21 +84,29 @@ If you do not wish to use joystick control run:
 roslaunch control test_nojoy.launch
 ```
 
-## Troubleshooting
+### Terminal command control
 
-### Octomap catkin_make error:<br/>
-
-Could not find a package configuration file provided by "octomap_ros" with
-any of the following names:
-
-octomap_rosConfig.cmake
-octomap_ros-config.cmake
-
-This happens because of missing octomap_ros libraries, and can be fix by installing the following:
+#### Takeoff
 
 ```bash
-sudo apt-get install ros-melodic-octomap ros-melodic-octomap-mapping ros-melodic-octomap-msgs ros-melodic-octomap-ros ros-melodic-octomap-rviz-plugins ros-melodic-octomap-server
+rostopic pub -1 /ardrone/takeoff std_msgs/Empty
 ```
+
+#### Land
+
+```bash
+rostopic pub -1 /ardrone/land std_msgs/Empty
+```
+
+#### Velocity
+
+Change the values for x, y, z in linear or angular
+
+```bash
+rostopic pub -r 10 /cmd_vel geometry_msgs/Twist  '{linear:  {x: 0.0, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'
+```
+
+## Troubleshooting
 
 ## Contributing
 

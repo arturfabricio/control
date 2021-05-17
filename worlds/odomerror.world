@@ -24,40 +24,10 @@
       <shadows>1</shadows>
     </scene>
     <state world_name='default'>
-      <sim_time>2985 35000000</sim_time>
-      <real_time>33 414623333</real_time>
-      <wall_time>1620898471 707067836</wall_time>
-      <iterations>32606</iterations>
-      <model name='arm_part_clone'>
-        <pose frame=''>-0 -20 0.1 -0 -0 -0.000346</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>-0 -20 0.1 -0 -0 -0.000346</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='arm_part_clone_0'>
-        <pose frame=''>15 0 0.1 0 -0 0.000656</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>15 0 0.1 0 -0 0.000656</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 -0 0 0 -0 0</acceleration>
-          <wrench>0 -0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='arm_part_clone_1'>
-        <pose frame=''>-15 -0 0.1 0 0 -0.000346</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>-15 -0 0.1 0 0 -0.000346</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>-10.262 0.004017 5.24655 -0.053444 -0.237081 0.000512</acceleration>
-          <wrench>-5.13102 0.002009 2.62328 0 -0 0</wrench>
-        </link>
-      </model>
+      <sim_time>3861 191000000</sim_time>
+      <real_time>517 177674675</real_time>
+      <wall_time>1621161705 458930488</wall_time>
+      <iterations>515544</iterations>
       <model name='mud_box_many'>
         <pose frame=''>0.106351 0.032142 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -369,110 +339,70 @@
         </link>
       </model>
       <model name='pine_tree_clone_0'>
-        <pose frame=''>-17.813 0.304591 0 0 -0 0</pose>
+        <pose frame=''>-18.4062 0.260763 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-17.813 0.304591 0 0 -0 0</pose>
+          <pose frame=''>-18.4062 0.260763 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='pine_tree_clone_1'>
-        <pose frame=''>-0.16024 22.5518 0 0 -0 0</pose>
+        <pose frame=''>-0.16024 23 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-0.16024 22.5518 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='pine_tree_clone_10'>
-        <pose frame=''>-5.87643 8.37297 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>-5.87643 8.37297 0 0 -0 0</pose>
+          <pose frame=''>-0.16024 23 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='pine_tree_clone_2'>
-        <pose frame=''>18.7485 -0.082518 0 0 -0 0</pose>
+        <pose frame=''>19.0831 -0.117102 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>18.7485 -0.082518 0 0 -0 0</pose>
+          <pose frame=''>19.0831 -0.117102 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='pine_tree_clone_3'>
-        <pose frame=''>14.0389 16.1289 0 0 -0 0</pose>
+        <pose frame=''>15.185 17.4669 -0.176229 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>14.0389 16.1289 0 0 -0 0</pose>
+          <pose frame=''>15.185 17.4669 -0.176229 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='pine_tree_clone_4'>
-        <pose frame=''>-12.1296 16.4633 0 0 -0 0</pose>
+        <pose frame=''>-15.6044 18.073 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-12.1296 16.4633 0 0 -0 0</pose>
+          <pose frame=''>-15.6044 18.073 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='pine_tree_clone_5'>
-        <pose frame=''>-12.6969 -16.2087 0 0 -0 0</pose>
+        <pose frame=''>-16.0235 -17.3051 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-12.6969 -16.2087 0 0 -0 0</pose>
+          <pose frame=''>-16.0235 -17.3051 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='pine_tree_clone_6'>
-        <pose frame=''>14.3162 -15.8043 0 0 -0 0</pose>
+        <pose frame=''>15.943 -15.6498 0.008089 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>14.3162 -15.8043 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='pine_tree_clone_7'>
-        <pose frame=''>6.23632 9.78581 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>6.23632 9.78581 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='pine_tree_clone_8'>
-        <pose frame=''>-6.85368 -7.55693 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>-6.85368 -7.55693 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='pine_tree_clone_9'>
-        <pose frame=''>8.12833 -7.49393 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='link'>
-          <pose frame=''>8.12833 -7.49393 0 0 -0 0</pose>
+          <pose frame=''>15.943 -15.6498 0.008089 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -484,7 +414,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>-4.04328 43.6927 50.7217 0 0.926923 -1.59074</pose>
+        <pose frame=''>-17.8128 19.3893 70.7553 0 1.29492 -1.61873</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -2870,171 +2800,6 @@
       <allow_auto_disable>1</allow_auto_disable>
       <pose frame=''>0.075363 -0.170248 0 0 -0 0</pose>
     </model>
-    <model name='arm_part_clone'>
-      <link name='link'>
-        <inertial>
-          <pose frame=''>0 -0.12223 0.101835 0 -0 0</pose>
-          <mass>0.5</mass>
-          <inertia>
-            <ixx>0.00950655</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.00543452</iyy>
-            <iyz>0</iyz>
-            <izz>0.0114843</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <pose frame=''>0 -0.12223 0.101835 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.29824 0.43206 0.20367</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://arm_part/meshes/arm.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://arm_part/materials/scripts</uri>
-              <uri>model://arm_part/materials/textures</uri>
-              <name>ArmPart/Diffuse</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>0 13.5192 0.099995 -0 -3.3e-05 -0.000346</pose>
-    </model>
-    <model name='arm_part_clone_0'>
-      <link name='link'>
-        <inertial>
-          <pose frame=''>0 -0.12223 0.101835 0 -0 0</pose>
-          <mass>0.5</mass>
-          <inertia>
-            <ixx>0.00950655</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.00543452</iyy>
-            <iyz>0</iyz>
-            <izz>0.0114843</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <pose frame=''>0 -0.12223 0.101835 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.29824 0.43206 0.20367</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://arm_part/meshes/arm.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://arm_part/materials/scripts</uri>
-              <uri>model://arm_part/materials/textures</uri>
-              <name>ArmPart/Diffuse</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>3 14 0.099995 -0 -3.3e-05 -0.000346</pose>
-    </model>
-    <model name='arm_part_clone_1'>
-      <link name='link'>
-        <inertial>
-          <pose frame=''>0 -0.12223 0.101835 0 -0 0</pose>
-          <mass>0.5</mass>
-          <inertia>
-            <ixx>0.00950655</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.00543452</iyy>
-            <iyz>0</iyz>
-            <izz>0.0114843</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <pose frame=''>0 -0.12223 0.101835 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.29824 0.43206 0.20367</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://arm_part/meshes/arm.dae</uri>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://arm_part/materials/scripts</uri>
-              <uri>model://arm_part/materials/textures</uri>
-              <name>ArmPart/Diffuse</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>-2 14.5822 0.099995 -0 -3.3e-05 -0.000346</pose>
-    </model>
     <model name='pine_tree'>
       <static>1</static>
       <link name='link'>
@@ -3853,258 +3618,6 @@
         <kinematic>0</kinematic>
       </link>
       <pose frame=''>14.3162 -15.8043 0 0 -0 0</pose>
-    </model>
-    <model name='pine_tree_clone_7'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='branch'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Branch</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Branch</name>
-            </script>
-          </material>
-        </visual>
-        <visual name='bark'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Bark</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Bark</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>6.23632 9.78581 0 0 -0 0</pose>
-    </model>
-    <model name='pine_tree_clone_8'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='branch'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Branch</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Branch</name>
-            </script>
-          </material>
-        </visual>
-        <visual name='bark'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Bark</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Bark</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>-6.85368 -7.55693 0 0 -0 0</pose>
-    </model>
-    <model name='pine_tree_clone_9'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='branch'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Branch</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Branch</name>
-            </script>
-          </material>
-        </visual>
-        <visual name='bark'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Bark</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Bark</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>8.12833 -7.49393 0 0 -0 0</pose>
-    </model>
-    <model name='pine_tree_clone_10'>
-      <static>1</static>
-      <link name='link'>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='branch'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Branch</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Branch</name>
-            </script>
-          </material>
-        </visual>
-        <visual name='bark'>
-          <geometry>
-            <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
-              <submesh>
-                <name>Bark</name>
-              </submesh>
-            </mesh>
-          </geometry>
-          <material>
-            <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Bark</name>
-            </script>
-          </material>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-      <pose frame=''>-5.87643 8.37297 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>
