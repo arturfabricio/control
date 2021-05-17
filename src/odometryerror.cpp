@@ -8,7 +8,6 @@
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
 #include <boost/foreach.hpp>
-#include "controller.h"
 #include <tf/tf.h>
 #include <fstream>
 #include <string>
