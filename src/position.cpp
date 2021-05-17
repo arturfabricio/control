@@ -3,6 +3,7 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include <sensor_msgs/PointCloud2.h>
 #include <nav_msgs/Odometry.h>
 #include <pcl_ros/point_cloud.h>
@@ -13,7 +14,7 @@
 #include <std_msgs/Empty.h>
 #include <geometry_msgs/Twist.h>
 
-const double speed = 100;
+const double speed = 1;
 const double threshold = 1.5;
 
 using namespace std;
@@ -154,17 +155,17 @@ void height_control(point drone)
 void avoid_obstacle(point pos, point obstacle)
 {
     double angle = angle_to_point(pos, obstacle, orientation) + 1.57;
-    double dis_obstacle = distance_points(pos, obstacle);
+    // double dis_obstacle = distance_points(pos, obstacle);
     cout << "The angle: " << angle << endl;
     cout << "The distance_obstacle: " << dis_obstacle << endl;
 
-    if (angle > 0 && angle < 1.15)
+    if (angle > 0 && angle < 1.3)
     {
         cout << "rotating left" << endl;
         linear_control(0, 0, 0);
         angular_control(0, 0, speed);
     }
-    else if (angle < 0 && angle > -1.15)
+    else if (angle < 0 && angle > -1.3)
     {
         cout << "rotating right" << endl;
         linear_control(0, 0, 0);
@@ -219,10 +220,19 @@ int main(int argc, char **argv)
     takeoff_pub = n.advertise<std_msgs::Empty>("ardrone/takeoff", 10);
     land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
 
-    ros::Rate loop_rate(30);
+    ros::Rate loop_rate(15);
 
     while (ros::ok())
     {
+        // ofstream GTData;
+        // GTData.open("Height.csv");
+        // GTData << "X"
+        //        << ","
+        //        << "Y"
+        //        << ","
+        //        << "Z"
+        //        << "\n";
+
         height_control(drone_pos_gt);
         overall_distance = distance_points(drone_pos_gt, goal_point);
         point center_point = pcl_center(x_obstacle, y_obstacle, z_obstacle);
@@ -245,6 +255,7 @@ int main(int argc, char **argv)
             to_goal(drone_pos_gt, goal_point);
         }
         pub_vel.publish(twist);
+        // GTData << drone_pos_gt.x << "," << drone_pos_gt.y << "," << drone_pos_gt.z << "\n";
         ros::spinOnce();
         loop_rate.sleep();
     }
