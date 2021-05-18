@@ -18,9 +18,17 @@
        <param name="min_num_kf_in_map" type="int" value="5" />
 
       <!-- ORB parameters -->
-      <param name="/ORBextractor/nFeatures" type="int" value="2500" />
+      <!-- Number of features in an image-->
+      <param name="/ORBextractor/nFeatures" type="int" value="4000" />
+      <!-- Scale factor between levels in the scale pyramid-->
       <param name="/ORBextractor/scaleFactor" type="double" value="1.2" />
-      <param name="/ORBextractor/nLevels" type="int" value="8" />
+      <!-- Number of levels in the scale pyramid-->
+      <param name="/ORBextractor/nLevels" type="int" value="10" />
+      
+      <!--  # Fast threshold
+            # Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
+            # Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST -->
+
       <param name="/ORBextractor/iniThFAST" type="int" value="20" />
       <param name="/ORBextractor/minThFAST" type="int" value="7" />
 
