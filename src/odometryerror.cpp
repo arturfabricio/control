@@ -13,7 +13,7 @@
 #include <std_msgs/Empty.h>
 #include <geometry_msgs/Twist.h>
 #include <fstream>
-#include <chrono>
+#include <time.h>
 
 const double speed = 100;
 
@@ -184,13 +184,15 @@ void UpdateCSV(){
     GTData << drone_pos2.x << "," << drone_pos2.y << "," << drone_pos2.z << endl;
     DPose << drone_pos.x << "," << drone_pos.y << "," << drone_pos.z << endl; 
     HeightCSV << drone_pos2.z << endl;
+    cout << "Updating CSV files" << endl;
 }
 
 
 int main(int argc, char **argv)
 {
     int i = 0;
-    
+    int ms = 10;
+
     goal_point.x = x_position[i];
     goal_point.y = y_position[i];
     goal_point.z = z_position[i];
@@ -207,16 +209,17 @@ int main(int argc, char **argv)
     HeightCSV.open("HeightTracking.csv");
     GTData.open("GroundTruth.csv");
     DPose.open("DronePosition.csv");
-    clock_t timer_start, timer_end, Elapsed;
-    std::chrono::high_resolution_clock Clock;
+    clock_t timer_start, timer_end;
     
+    timer_start = time(0);
     ros::Rate loop_rate(30);
     while (ros::ok())
     {  
-        auto start_time = Clock.now();
+
         calc();
         pub_vel.publish(twist);
-        auto end_time = Clock.now();
+        timer_end = time(0);
+
         ros::spinOnce();
         loop_rate.sleep();
         
@@ -225,6 +228,7 @@ int main(int argc, char **argv)
             i++;
             if(i > 7){
                 i = 0;
+                cout << "Finished Lap, proceeding to next" << endl; 
             }
             at_goal = false;
         }
@@ -232,10 +236,11 @@ int main(int argc, char **argv)
         goal_point.y = y_position[i];
         goal_point.z = z_position[i];
         
-        cout << "seconds: "<< timer_end - timer_start << endl;
-        // if(secondsElapsed == 1){
-        //     UpdateCSV();
-        // }
+        //cout << "milliseconds: "<< timer_end - timer_start << endl;
+        if((timer_end - timer_start ) == ms){
+            UpdateCSV();
+            timer_start = timer_start+ms;
+        }
 
 
 
