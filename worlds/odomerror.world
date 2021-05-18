@@ -24,10 +24,100 @@
       <shadows>1</shadows>
     </scene>
     <state world_name='default'>
-      <sim_time>4240 504000000</sim_time>
-      <real_time>116 40367997</real_time>
-      <wall_time>1621245683 500166395</wall_time>
-      <iterations>114071</iterations>
+      <sim_time>4976 808000000</sim_time>
+      <real_time>737 554026588</real_time>
+      <wall_time>1621325347 297828137</wall_time>
+      <iterations>736304</iterations>
+      <model name='disk_part'>
+        <pose frame=''>10.0038 15.2201 0.100002 -1.5e-05 -1e-06 -0.013902</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>10.0038 15.2201 0.100002 -1.5e-05 -1e-06 -0.013902</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 -5e-06 -9.79999 0.000159 1.4e-05 0</acceleration>
+          <wrench>0 -2e-06 -4.9 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part_0'>
+        <pose frame=''>15 8e-06 0.099996 -2.6e-05 -3e-06 -2.1e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>15 8e-06 0.099996 -2.6e-05 -3e-06 -2.1e-05</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-0.171797 1.38649 -7.56479 2.37527 0.390239 0.007141</acceleration>
+          <wrench>-0.085899 0.693244 -3.78239 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part_1'>
+        <pose frame=''>10 -15 0.099994 -7e-06 -0 -4e-06</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>10 -15 0.099994 -7e-06 -0 -4e-06</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -4.9 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part_2'>
+        <pose frame=''>-8e-06 -20 0.099999 4e-06 2.4e-05 -6.8e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-8e-06 -20 0.099999 4e-06 2.4e-05 -6.8e-05</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -4.9 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part_3'>
+        <pose frame=''>-10 -15 0.100007 -1e-06 -4.2e-05 -1e-05</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-10 -15 0.100007 -1e-06 -4.2e-05 -1e-05</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-3e-06 -1e-06 19.6 2.3e-05 -0.000117 0</acceleration>
+          <wrench>-2e-06 -0 9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part_4'>
+        <pose frame=''>-15 1e-05 0.100007 -3.3e-05 -2.7e-05 -1e-06</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-15 1e-05 0.100007 -3.3e-05 -2.7e-05 -1e-06</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>-1e-06 1e-06 19.6 -2.7e-05 -3.7e-05 0</acceleration>
+          <wrench>-1e-06 0 9.8 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part_5'>
+        <pose frame=''>-10 15 0.099998 -3e-06 -8e-06 3e-06</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-10 15 0.099998 -3e-06 -8e-06 3e-06</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 -0 -0 -0</acceleration>
+          <wrench>0 0 -4.9 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='disk_part_6'>
+        <pose frame=''>-7e-06 20 0.100003 -1.7e-05 -2e-06 -0.000113</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-7e-06 20 0.100003 -1.7e-05 -2e-06 -0.000113</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 -2e-06 -9.8 7.5e-05 8e-06 0</acceleration>
+          <wrench>0 -1e-06 -4.9 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='gear_part'>
+        <pose frame=''>4.02789 12.086 0.09973 -0.00069 -0.003619 -0.000176</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>4.02789 12.086 0.09973 -0.00069 -0.003619 -0.000176</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
       <model name='mud_box_many'>
         <pose frame=''>0.859994 -0.01218 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -279,40 +369,50 @@
         </model>
       </model>
       <model name='oak_tree'>
-        <pose frame=''>18.3451 -22.8566 0 0 -0 0</pose>
+        <pose frame=''>-19 -22.8566 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>18.3451 -22.8566 0 0 -0 0</pose>
+          <pose frame=''>-19 -22.8566 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='oak_tree_clone'>
-        <pose frame=''>-18.3072 -22.9771 0 0 -0 0</pose>
+        <pose frame=''>-19 -22.9771 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-18.3072 -22.9771 0 0 -0 0</pose>
+          <pose frame=''>-19 -22.9771 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='oak_tree_clone_0'>
-        <pose frame=''>18.561 23.3376 0 0 -0 0</pose>
+        <pose frame=''>19 24 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>18.561 23.3376 0 0 -0 0</pose>
+          <pose frame=''>19 24 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
       <model name='oak_tree_clone_1'>
-        <pose frame=''>-17.8436 23.7989 0 0 -0 0</pose>
+        <pose frame=''>-18 24 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose frame=''>-17.8436 23.7989 0 0 -0 0</pose>
+          <pose frame=''>-18 24 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='oak_tree_clone_2'>
+        <pose frame=''>-19 -24 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>-19 -24 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -704,7 +804,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose frame=''>-3.39318 40.1615 28.7129 0 0.910921 -1.52273</pose>
+        <pose frame=''>-6.23119 2.97451 92.3363 -3e-06 1.5658 -1.51338</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
@@ -5735,6 +5835,577 @@
         <kinematic>0</kinematic>
       </link>
       <pose frame=''>5.24066 -0.244573 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.074147 12.1461 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part_0'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.741566 14.9029 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part_1'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.872427 12.0052 0 0 -0 0</pose>
+    </model>
+    <model name='gear_part'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.005875 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.000198203</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.000198203</iyy>
+            <iyz>0</iyz>
+            <izz>0.000384405</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.005875 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.012</length>
+              <radius>0.0392125</radius>
+            </cylinder>
+          </geometry>
+          <surface>
+            <contact>
+              <ode>
+                <max_vel>0.1</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://gear_part/meshes/gear.dae</uri>
+              <scale>0.25 0.25 0.25</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>4.02753 12.0861 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part_2'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>1.07231 13.4408 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part_3'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>0.354892 13.7985 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part_4'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-0.340191 16.0724 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part_5'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>1.02814 12.4969 0 0 -0 0</pose>
+    </model>
+    <model name='disk_part_6'>
+      <link name='link'>
+        <inertial>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.00321218</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00321218</iyy>
+            <iyz>0</iyz>
+            <izz>0.00614499</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <pose frame=''>0 0 0.02895 0 -0 0</pose>
+          <geometry>
+            <cylinder>
+              <length>0.0579</length>
+              <radius>0.15678</radius>
+            </cylinder>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://disk_part/meshes/disk.dae</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://arm_part/materials/scripts</uri>
+              <uri>model://arm_part/materials/textures</uri>
+              <name>ArmPart/Diffuse</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>1.44307 12.9923 0 0 -0 0</pose>
+    </model>
+    <model name='oak_tree_clone_2'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://oak_tree/meshes/oak_tree.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='branch'>
+          <geometry>
+            <mesh>
+              <uri>model://oak_tree/meshes/oak_tree.dae</uri>
+              <submesh>
+                <name>Branch</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://oak_tree/materials/scripts/</uri>
+              <uri>model://oak_tree/materials/textures/</uri>
+              <name>OakTree/Branch</name>
+            </script>
+          </material>
+        </visual>
+        <visual name='bark'>
+          <geometry>
+            <mesh>
+              <uri>model://oak_tree/meshes/oak_tree.dae</uri>
+              <submesh>
+                <name>Bark</name>
+              </submesh>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <uri>model://oak_tree/materials/scripts/</uri>
+              <uri>model://oak_tree/materials/textures/</uri>
+              <name>OakTree/Bark</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose frame=''>-18.6412 -24.2644 0 0 -0 0</pose>
     </model>
   </world>
 </sdf>
