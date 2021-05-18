@@ -15,8 +15,9 @@
 #include <geometry_msgs/Twist.h>
 
 const double speed = 1;
-const double rspeed = 0.5;
+const double rspeed = 0.25;
 const double threshold = 1.5;
+const double goal_threshold = 4;
 
 using namespace std;
 
@@ -204,13 +205,14 @@ void to_goal(point pos, point goal, double distance_obstacle)
 
 int main(int argc, char **argv)
 {
-    goal_point.x = -5;
-    goal_point.y = -16;
-    goal_point.z = 0;
-
     std::cout << "Initiated" << endl;
     ros::init(argc, argv, "my_subscriber");
     ros::NodeHandle n;
+
+    goal_point.x = 12;
+    goal_point.y = -13;
+    goal_point.z = 0;
+
     ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 10, orb_slam_callback); //Topic_name, queue size and callback function.
     ros::Subscriber subscribe_state = n.subscribe("/ground_truth/state", 10, groundThruth_Callback);
     ros::Subscriber subscriverpc = n.subscribe("/object_cluster", 1, obstacle_callback);
@@ -222,19 +224,10 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-        // ofstream GTData;
-        // GTData.open("Height.csv");
-        // GTData << "X"
-        //        << ","
-        //        << "Y"
-        //        << ","
-        //        << "Z"
-        //        << "\n";
-
         height_control(drone_pos_gt);
-        overall_distance = distance_points(drone_pos_gt, goal_point);
+        overall_distance = distance_points(drone_pos_gt, goal_point) / 10;
         pair<point, double> center_point = pcl_center(x_obstacle, y_obstacle, z_obstacle);
-        if (overall_distance < threshold)
+        if (overall_distance < goal_threshold)
         {
             cout << "Arrived at final goal!" << endl;
             angular_control(0, 0, 0);
@@ -252,8 +245,9 @@ int main(int argc, char **argv)
             cout << "Moving to Goal Point" << endl;
             to_goal(drone_pos_gt, goal_point, center_point.second);
         }
+        cout << "Goal point: " << goal_point.x << ", " << goal_point.y << ", " << goal_point.z << endl;
+        cout << "Distance to goal: " << overall_distance << endl;
         pub_vel.publish(twist);
-        // GTData << drone_pos_gt.x << "," << drone_pos_gt.y << "," << drone_pos_gt.z << "\n";
         ros::spinOnce();
         loop_rate.sleep();
     }
