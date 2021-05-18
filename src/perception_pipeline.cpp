@@ -59,7 +59,6 @@ int main(int argc, char *argv[])
     ros::Publisher object_pub, cluster_pub, pose_pub;
     object_pub = nh.advertise<sensor_msgs::PointCloud2>("object_cluster", 1);
     cluster_pub = nh.advertise<sensor_msgs::PointCloud2>("primary_cluster", 1);
-
     while (ros::ok())
     {
         // Listen for PointCloud
@@ -103,7 +102,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_x;
         pass_x.setInputCloud(update_cloud_ptr);
         pass_x.setFilterFieldName("x");
-        pass_x.setFilterLimits(-0.2, 0.5);
+        pass_x.setFilterLimits(-0.1, 0.5);
         pass_x.filter(xf_cloud);
 
         //y-direction
@@ -111,7 +110,7 @@ int main(int argc, char *argv[])
         pcl::PassThrough<pcl::PointXYZ> pass_y;
         pass_y.setInputCloud(xf_cloud_ptr);
         pass_y.setFilterFieldName("y");
-        pass_y.setFilterLimits(-0.5, 0.5);
+        pass_y.setFilterLimits(-0.3, 0.3);
         pass_y.filter(yf_cloud);
 
         // Add drone position to pointcloud
