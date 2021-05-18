@@ -13,6 +13,8 @@
 #include <numeric>
 #include <std_msgs/Empty.h>
 #include <geometry_msgs/Twist.h>
+#include <fstream>
+#include <iomanip>
 
 const double speed = 1;
 const double rspeed = 0.25;

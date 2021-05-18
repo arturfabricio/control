@@ -16292,7 +16292,7 @@
         <collision name='collision'>
           <geometry>
             <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
+              <uri>model://oak_tree/meshes/oak_tree.dae</uri>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -16312,7 +16312,7 @@
         <visual name='branch'>
           <geometry>
             <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
+              <uri>model://oak_tree/meshes/oak_tree.dae</uri>
               <submesh>
                 <name>Branch</name>
               </submesh>
@@ -16320,16 +16320,16 @@
           </geometry>
           <material>
             <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Branch</name>
+              <uri>model://oak_tree/materials/scripts/</uri>
+              <uri>model://oak_tree/materials/textures/</uri>
+              <name>OakTree/Branch</name>
             </script>
           </material>
         </visual>
         <visual name='bark'>
           <geometry>
             <mesh>
-              <uri>model://pine_tree/meshes/pine_tree.dae</uri>
+              <uri>model://oak_tree/meshes/oak_tree.dae</uri>
               <submesh>
                 <name>Bark</name>
               </submesh>
@@ -16337,9 +16337,9 @@
           </geometry>
           <material>
             <script>
-              <uri>model://pine_tree/materials/scripts/</uri>
-              <uri>model://pine_tree/materials/textures/</uri>
-              <name>PineTree/Bark</name>
+              <uri>model://oak_tree/materials/scripts/</uri>
+              <uri>model://oak_tree/materials/textures/</uri>
+              <name>OakTree/Bark</name>
             </script>
           </material>
         </visual>
