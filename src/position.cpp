@@ -15,6 +15,7 @@
 #include <geometry_msgs/Twist.h>
 
 const double speed = 1;
+const double rspeed = 0.5;
 const double threshold = 1.5;
 
 using namespace std;
@@ -44,7 +45,6 @@ struct point drone_pos_gt;     //Change name so it is easier to distinguish betw
 struct quaternion orientation; //Same as above
 struct quaternion pose_orientation;
 struct point goal_point; //Revisit
-double dis_obstacle = 2;
 double overall_distance = 1000;
 bool new_goal = false;
 bool at_goal = false;
@@ -84,7 +84,7 @@ double angle_to_point(point pos, point goal, quaternion orientation)
     return angle1 - angle2;
 }
 
-point pcl_center(vector<double> x, vector<double> y, vector<double> z)
+pair<point, double> pcl_center(vector<double> x, vector<double> y, vector<double> z)
 {
     double x_total;
     double y_total;
@@ -96,9 +96,9 @@ point pcl_center(vector<double> x, vector<double> y, vector<double> z)
     }
     center_point.x = x_total / x.size();
     center_point.y = y_total / y.size();
-    dis_obstacle = distance_points(drone_pos_vo, center_point);
+    double dis_obstacle = distance_points(drone_pos_vo, center_point);
     cout << "Distance centroid: " << dis_obstacle << endl;
-    return center_point;
+    return make_pair(center_point, dis_obstacle);
 }
 
 void orb_slam_callback(const geometry_msgs::PoseStamped::ConstPtr &msg)
@@ -152,24 +152,23 @@ void height_control(point drone)
     }
 }
 
-void avoid_obstacle(point pos, point obstacle)
+void avoid_obstacle(point pos, point obstacle, double distance_obstacle)
 {
     double angle = angle_to_point(pos, obstacle, orientation) + 1.57;
-    // double dis_obstacle = distance_points(pos, obstacle);
     cout << "The angle: " << angle << endl;
-    cout << "The distance_obstacle: " << dis_obstacle << endl;
+    cout << "The distance_obstacle: " << distance_obstacle << endl;
 
     if (angle > 0 && angle < 1.3)
     {
         cout << "rotating left" << endl;
         linear_control(0, 0, 0);
-        angular_control(0, 0, speed);
+        angular_control(0, 0, rspeed);
     }
     else if (angle < 0 && angle > -1.3)
     {
         cout << "rotating right" << endl;
         linear_control(0, 0, 0);
-        angular_control(0, 0, -speed);
+        angular_control(0, 0, -rspeed);
     }
     else
     {
@@ -179,13 +178,13 @@ void avoid_obstacle(point pos, point obstacle)
     }
 }
 
-void to_goal(point pos, point goal)
+void to_goal(point pos, point goal, double distance_obstacle)
 {
     double angle = angle_to_point(pos, goal, orientation);
     double LowBound = -0.00872665 * overall_distance / 10;
     double UpBound = 0.00872665 * overall_distance / 10;
 
-    if (((angle > LowBound && angle < UpBound) || angle == 0) && dis_obstacle > 1)
+    if (((angle > LowBound && angle < UpBound) || angle == 0) && distance_obstacle > 1)
     {
         angular_control(0, 0, 0);
         linear_control(speed, 0, 0);
@@ -194,11 +193,11 @@ void to_goal(point pos, point goal)
     {
         if (angle > 0)
         {
-            angular_control(0, 0, -speed);
+            angular_control(0, 0, -rspeed);
         }
         else
         {
-            angular_control(0, 0, speed);
+            angular_control(0, 0, rspeed);
         }
     }
 }
@@ -209,8 +208,7 @@ int main(int argc, char **argv)
     goal_point.y = -16;
     goal_point.z = 0;
 
-    std::cout << "Initiated"
-              << "\n";
+    std::cout << "Initiated" << endl;
     ros::init(argc, argv, "my_subscriber");
     ros::NodeHandle n;
     ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 10, orb_slam_callback); //Topic_name, queue size and callback function.
@@ -220,7 +218,7 @@ int main(int argc, char **argv)
     takeoff_pub = n.advertise<std_msgs::Empty>("ardrone/takeoff", 10);
     land_pub = n.advertise<std_msgs::Empty>("ardrone/land", 10);
 
-    ros::Rate loop_rate(15);
+    ros::Rate loop_rate(30);
 
     while (ros::ok())
     {
@@ -235,7 +233,7 @@ int main(int argc, char **argv)
 
         height_control(drone_pos_gt);
         overall_distance = distance_points(drone_pos_gt, goal_point);
-        point center_point = pcl_center(x_obstacle, y_obstacle, z_obstacle);
+        pair<point, double> center_point = pcl_center(x_obstacle, y_obstacle, z_obstacle);
         if (overall_distance < threshold)
         {
             cout << "Arrived at final goal!" << endl;
@@ -244,15 +242,15 @@ int main(int argc, char **argv)
             land_pub.publish(msg);
             break;
         }
-        else if (dis_obstacle < threshold && x_obstacle.size() > 20)
+        else if (center_point.second < threshold && x_obstacle.size() > 20)
         {
             cout << "OBSTACLE!" << endl;
-            avoid_obstacle(drone_pos_vo, center_point);
+            avoid_obstacle(drone_pos_vo, center_point.first, center_point.second);
         }
         else
         {
             cout << "Moving to Goal Point" << endl;
-            to_goal(drone_pos_gt, goal_point);
+            to_goal(drone_pos_gt, goal_point, center_point.second);
         }
         pub_vel.publish(twist);
         // GTData << drone_pos_gt.x << "," << drone_pos_gt.y << "," << drone_pos_gt.z << "\n";
