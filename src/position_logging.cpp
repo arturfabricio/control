@@ -50,6 +50,7 @@ struct quaternion orientation; //Same as above
 struct quaternion pose_orientation;
 struct point goal_point; //Revisit
 double overall_distance = 1000;
+ofstream logfile;
 
 void linear_control(double x, double y, double z)
 {
@@ -99,6 +100,10 @@ pair<point, double> pcl_center(vector<double> x, vector<double> y, vector<double
     center_point.x = x_total / x.size();
     center_point.y = y_total / y.size();
     double dis_obstacle = distance_points(drone_pos_vo, center_point);
+    if (logfile.is_open())
+    {
+        logfile << "Distance centroid: " << dis_obstacle << endl;
+    }
     cout << "Distance centroid: " << dis_obstacle << endl;
     return make_pair(center_point, dis_obstacle);
 }
@@ -157,6 +162,10 @@ void height_control(point drone)
 void avoid_obstacle(point pos, point obstacle, double distance_obstacle)
 {
     double angle = angle_to_point(pos, obstacle, orientation) + 1.57;
+    if (logfile.is_open())
+    {
+        logfile << "The distance_obstacle: " << distance_obstacle << endl;
+    }
     cout << "The distance_obstacle: " << distance_obstacle << endl;
 
     if (angle > 0 && angle < 1.3)
@@ -171,12 +180,20 @@ void avoid_obstacle(point pos, point obstacle, double distance_obstacle)
     }
     else if (angle < 0 && angle > -1.3)
     {
+        if (logfile.is_open())
+        {
+            logfile << "rotating right" << endl;
+        }
         cout << "rotating right" << endl;
         linear_control(0, 0, 0);
         angular_control(0, 0, -rspeed);
     }
     else
     {
+        if (logfile.is_open())
+        {
+            logfile << "Moving forward" << endl;
+        }
         cout << "Moving forward" << endl;
         angular_control(0, 0, 0);
         linear_control(speed, 0, 0);
@@ -227,14 +244,27 @@ int main(int argc, char **argv)
 
     ros::Rate loop_rate(30);
 
+    time_t t = time(0); // get time now
+    struct tm *now = localtime(&t);
+    char buffer[80];
+    strftime(buffer, 80, "%d-%m_%H:%M:%S.log", now);
+    logfile.open(buffer);
     while (ros::ok())
     {
         height_control(drone_pos_gt);
         overall_distance = distance_points(drone_pos_gt, goal_point) / 10;
         pair<point, double> center_point = pcl_center(x_obstacle, y_obstacle, z_obstacle);
+        if (logfile.is_open())
+        {
+            logfile << "Drone point: " << drone_pos_gt.x << ", " << drone_pos_gt.y << ", " << drone_pos_gt.z << endl;
+        }
         cout << "Drone point: " << drone_pos_gt.x << ", " << drone_pos_gt.y << ", " << drone_pos_gt.z << endl;
         if (overall_distance < goal_threshold)
         {
+            if (logfile.is_open())
+            {
+                logfile << "Arrived at goal!" << endl;
+            }
             cout << "Arrived at goal!" << endl;
             angular_control(0, 0, 0);
             linear_control(0, 0, 0);
@@ -243,13 +273,26 @@ int main(int argc, char **argv)
         }
         else if (center_point.second < threshold && x_obstacle.size() > 20)
         {
+            if (logfile.is_open())
+            {
+                logfile << "OBSTACLE!" << endl;
+            }
             cout << "OBSTACLE!" << endl;
             avoid_obstacle(drone_pos_vo, center_point.first, center_point.second);
         }
         else
         {
+            if (logfile.is_open())
+            {
+                logfile << "Moving to goal point" << endl;
+            }
             cout << "Moving to Goal Point" << endl;
             to_goal(drone_pos_gt, goal_point, center_point.second);
+        }
+        if (logfile.is_open())
+        {
+            logfile << "Goal point: " << goal_point.x << ", " << goal_point.y << ", " << goal_point.z << endl;
+            logfile << "Distance to goal: " << overall_distance << endl;
         }
         cout << "Goal point: " << goal_point.x << ", " << goal_point.y << ", " << goal_point.z << endl;
         cout << "Distance to goal: " << overall_distance << endl;
@@ -257,5 +300,16 @@ int main(int argc, char **argv)
         ros::spinOnce();
         loop_rate.sleep();
     }
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end - start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    if (logfile.is_open())
+    {
+        logfile << "finished at " << std::ctime(&end_time)
+                << "elapsed time: " << elapsed_seconds.count() << endl;
+    }
+    std::cout << "finished at " << std::ctime(&end_time)
+              << "elapsed time: " << elapsed_seconds.count() << endl;
+    logfile.close();
     return (0);
 }
