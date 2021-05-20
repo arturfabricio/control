@@ -230,11 +230,11 @@ int main(int argc, char **argv)
 {
     auto start = std::chrono::system_clock::now();
     std::cout << "Initiated" << endl;
-    ros::init(argc, argv, "my_subscriber");
+    ros::init(argc, argv, "position_node");
     ros::NodeHandle n;
 
-    goal_point.x = -8;
-    goal_point.y = -8;
+    goal_point.x = 20;
+    goal_point.y = -20;
     goal_point.z = 0;
 
     ros::Subscriber subscribetf = n.subscribe("/orb_slam2_mono/pose", 10, orb_slam_callback); //Topic_name, queue size and callback function.
